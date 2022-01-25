@@ -1,9 +1,7 @@
 <mat-toolbar>
   <span>Weather Radar</span>
   <span class="example-spacer"></span>
-  <button mat-button [matMenuTriggerFor]="menu" class="circle">{{nameIntial()}}</button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="logout()">Logout</button>
-  </mat-menu>
+  <div class="circle">{{nameIntial()}}</div>
+  <button mat-raised-button (click)="logout()">Logout</button>
 </mat-toolbar>
 
