@@ -11,7 +11,8 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { GoogleLoginProvider, SocialLoginModule } from 'angularx-social-login';
 import { AuthGuardService } from './auth-guard.service';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,9 @@ import { AuthGuardService } from './auth-guard.service';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-    SocialLoginModule
+    SocialLoginModule,
+    MatToolbarModule,
+    MatMenuModule
   ],
   providers: [{
     provide: 'SocialAuthServiceConfig',

@@ -1,7 +1,7 @@
-<div *ngIf="socialAuthServive.authState | async as socialUser">
-  <p>Hello, {{socialUser.name}}!</p>
-  <br>
-  <p>Your email: {{socialUser.email}}</p>
-  <br>
+<mat-toolbar>
+  <span>Weather Radar</span>
+  <span class="example-spacer"></span>
+  <div class="circle">{{nameIntial()}}</div>
   <button mat-raised-button (click)="logout()">Logout</button>
-</div>
+</mat-toolbar>
+
