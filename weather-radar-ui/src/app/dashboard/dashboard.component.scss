@@ -1,4 +1,5 @@
 // toolbar css
+:host {
 .circle {
   width: 50px;
   height: 50px;
@@ -15,6 +16,7 @@
 .toolbar-spacer {
   flex: 1 1 auto;
 }
+
 // toolbar css end
 
 //section css
@@ -27,11 +29,13 @@
 // section css end
 
 // card css
-.mat-card-title {
-  text-align: center;
+
+.mat-card-header {
+  margin: auto;
+  width:fit-content;
 }
 
-mat-card {
+.dashboard-card {
   margin-top: 100px;
 }
 
@@ -45,7 +49,7 @@ mat-card {
   margin: 0 10px;
 }
 
-button {
+.submit-data {
   width: 200px;
   height: 50px;
 }
@@ -79,3 +83,4 @@ button {
   font-weight: bold;
 }
 // table css end
+}

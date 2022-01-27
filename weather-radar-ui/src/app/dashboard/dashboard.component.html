@@ -1,9 +1,9 @@
 <!-- Toolbar -->
-<mat-toolbar>
+<mat-toolbar class="shadow">
   <span>Weather Radar</span>
   <span class="toolbar-spacer"></span>
   <div class="circle">{{nameIntial()}}</div>
-  <button mat-raised-button (click)="logout()">Logout New</button>
+  <button mat-raised-button (click)="logout()">Logout</button>
 </mat-toolbar>
 <!-- Toolbar End -->
 
@@ -40,7 +40,7 @@ fxFlexFill >
           <mat-form-field appearance="fill">
             <input matInput type="date" formControlName="date">
           </mat-form-field>
-          <button mat-raised-button type="submit" >Plot</button>
+          <button mat-raised-button class="submit-data" type="submit" >Plot</button>
         </form>
       </mat-card-content>
       <img mat-card-image src="https://geology.com/world/the-united-states-of-america-map.gif" alt="Photo of a Shiba Inu">
