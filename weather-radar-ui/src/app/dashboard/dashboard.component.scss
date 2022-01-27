@@ -1,3 +1,4 @@
+// toolbar css
 .circle {
   width: 50px;
   height: 50px;
@@ -11,6 +12,70 @@
   margin: 10px 10px;
 }
 
-.example-spacer {
+.toolbar-spacer {
   flex: 1 1 auto;
 }
+// toolbar css end
+
+//section css
+.content {
+ background-color: azure;
+}
+.sec-right {
+  margin: 0 50px;
+}
+// section css end
+
+// card css
+.mat-card-title {
+  text-align: center;
+}
+
+mat-card {
+  margin-top: 100px;
+}
+
+.card-content{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.mat-form-field {
+  margin: 0 10px;
+}
+
+button {
+  width: 200px;
+  height: 50px;
+}
+// card css end
+
+//mat-table css
+.demo-table {
+  width: 100%;
+  margin-top: 241px;
+}
+
+.mat-column-demo-position {
+  width: 32px;
+  border-right: 1px solid currentColor;
+  padding-right: 24px;
+  text-align: center;
+}
+
+.mat-column-demo-name {
+  padding-left: 16px;
+  font-size: 20px;
+}
+
+.mat-column-demo-weight {
+  font-style: italic;
+}
+
+.mat-column-demo-symbol {
+  width: 32px;
+  text-align: center;
+  font-weight: bold;
+}
+// table css end

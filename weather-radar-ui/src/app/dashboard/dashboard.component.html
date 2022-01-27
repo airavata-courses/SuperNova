@@ -1,7 +1,78 @@
+<!-- Toolbar -->
 <mat-toolbar>
   <span>Weather Radar</span>
-  <span class="example-spacer"></span>
+  <span class="toolbar-spacer"></span>
   <div class="circle">{{nameIntial()}}</div>
-  <button mat-raised-button (click)="logout()">Logout</button>
+  <button mat-raised-button (click)="logout()">Logout New</button>
 </mat-toolbar>
+<!-- Toolbar End -->
+
+<!-- User dashboard -->
+<div class="content"
+fxLayout="row"
+fxLayout.xs="column"
+fxFlexFill >
+  <!-- Section right -->
+  <div fxFlex="20" class="sec-right" fxFlex.xs="55">
+      first-section
+  </div>
+  <!-- Section right end -->
+
+  <!-- Section center -->
+  <div fxFlex="60" class="section-center" >
+
+    <!-- mat card  -->
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title class="dashboard-title">Fetch Weather Data</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="card-content">
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
+          <mat-form-field appearance="fill">
+            <mat-label>Select</mat-label>
+            <mat-select formControlName="radStation">
+              <div  *ngFor="let radStationData of radStationList">
+              <mat-option value="{{radStationData.value}}"> {{radStationData.name}} </mat-option>
+              </div>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <input matInput type="date" formControlName="date">
+          </mat-form-field>
+          <button mat-raised-button type="submit" >Plot</button>
+        </form>
+      </mat-card-content>
+      <img mat-card-image src="https://geology.com/world/the-united-states-of-america-map.gif" alt="Photo of a Shiba Inu">
+    </mat-card>
+    <!-- mat card  end-->
+
+  </div>
+  <!-- Section center end-->
+
+  <!-- Section right -->
+  <div fxFlex="20" class="sec-right" fxFlex.xs="15">
+    <!-- Table -->
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+      <!-- RAD STATION Column -->
+      <ng-container matColumnDef="radStation">
+        <th mat-header-cell *matHeaderCellDef> RAD STATION </th>
+        <td mat-cell *matCellDef="let element"> {{element.radStation}} </td>
+      </ng-container>
+
+      <!-- DATE Column -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef> DATE </th>
+        <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <!-- Table -->
+  </div>
+  <!-- Section right end-->
+
+</div>
+<!-- User dashboard -->
 
