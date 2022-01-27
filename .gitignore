@@ -1,2 +1,3 @@
 weather-radar-gateway/__pycache__/
 weather-radar-gateway/node_modules/
+weather-radar-gateway/fakeapi/node_modules/
