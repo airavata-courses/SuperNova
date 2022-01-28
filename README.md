@@ -1,14 +1,11 @@
 # SuperNova
-# This is UI REPO for ADS Project 1.
-# We are using ANGULAR as front-end design framework
 
-# SETUP STEP:
+Spring 2022 Project
 
-STEP 0: Clone the project
+# Developer
+1. Sanket Darwante
+2. Sumedh Salvi
+3. Richa Jha
 
-STEP 1: Install node & Install Angular:-https://angular.io/guide/setup-local
-
-STEP 2: cd weather-radar-ui
-
-STEP 3: ng serve --open
-
+# Napkin Diagram
+![](https://github.com/airavata-courses/SuperNova/blob/dev-wiki-data/wiki/wiki_images/napkinDaigram.jpg)
