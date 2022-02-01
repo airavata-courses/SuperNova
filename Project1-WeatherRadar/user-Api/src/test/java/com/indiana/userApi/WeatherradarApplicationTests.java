@@ -1,10 +1,10 @@
-package com.weatherradar.userApi;
+package com.indiana.userApi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UserApiApplicationTests {
+class WeatherradarApplicationTests {
 
 	@Test
 	void contextLoads() {
