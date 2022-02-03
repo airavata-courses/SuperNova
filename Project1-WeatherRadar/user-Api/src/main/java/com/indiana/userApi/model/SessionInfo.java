@@ -16,6 +16,7 @@ public class SessionInfo implements Serializable{
     private static final long serialVersionUID = -2765339563414172599L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column

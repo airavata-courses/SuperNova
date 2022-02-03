@@ -1,5 +1,6 @@
 package com.indiana.userApi.controller;
 
+import com.indiana.userApi.model.SessionInfo;
 import com.indiana.userApi.model.SessionRequestInfo;
 import com.indiana.userApi.repository.SessionInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import com.indiana.userApi.model.UserInfo;
 import com.indiana.userApi.repository.UserInfoRespository;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
@@ -57,8 +60,16 @@ public class WeatherController {
 
 
 
-			UserInfo newUserInfo = new UserInfo(0,sessionRequestInfo.getEmailAddress()) ;
+			UserInfo newUserInfo = new UserInfo();
+			newUserInfo.setUserEmail(sessionRequestInfo.getEmailAddress());
 			newUserInfo = userInfoRespository.save(newUserInfo);
+
+			SessionInfo sessionInfo = new SessionInfo();
+			sessionInfo.setSessionTime(new Timestamp(System.currentTimeMillis()));
+			sessionInfo.setDateTime(Calendar.getInstance());
+			sessionInfo.setRadStation(sessionRequestInfo.getRadStation());
+			sessionInfo.setUserId(newUserInfo.getId());
+			sessionInfo = sessionInfoRepository.save(sessionInfo);
 
 
 //			SessionInfo sessionInfo = new SessionInfo(0,0, sessionRequestInfo.getEmailAddress(), null,new Calendar()) ;
@@ -70,10 +81,16 @@ public class WeatherController {
 
 		}
 
+		UserInfo userDetail = userInfo.get(0) ;
 
+		SessionInfo sessionInfo = new SessionInfo();
+		sessionInfo.setSessionTime(new Timestamp(System.currentTimeMillis()));
+		sessionInfo.setDateTime(Calendar.getInstance());
+		sessionInfo.setRadStation(sessionRequestInfo.getRadStation());
+		sessionInfo.setUserId(userDetail.getId());
 
-//		SessionInfo sessionInfo = new SessionInfo(0,userInfo.(), sessionRequestInfo.getEmailAddress(), null,new Timestamp(System.currentTimeMillis())) ;
-//		sessionInfo = sessionInfoRepository.save(sessionInfo);
+//		SessionInfo sessionInfo = new SessionInfo(0,userDetail.getId(), sessionRequestInfo.getRadStation(), new Timestamp(System.currentTimeMillis()), Calendar.getInstance()) ;
+		sessionInfo = sessionInfoRepository.save(sessionInfo);
 
 		return new ResponseEntity<>("Success", HttpStatus.OK);
 
