@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -9,6 +10,22 @@ import { UserSessionInfo } from '../modal/user-session-info';
 import { SpinnerService } from '../spinner.service';
 import { UserService } from '../user.service';
 import { WeatherService } from '../weather.service';
+
+
+/**
+ * Error state matcher for input email values.
+ */
+ export class InputErrorStateMatcher implements ErrorStateMatcher {
+  /**
+   * Determines whether error state is
+   * @param control
+   * @param _form
+   * @returns true if error state
+   */
+  isErrorState(control: FormControl | null): boolean {
+    return !!(control?.invalid && (control.dirty || control.touched));
+  }
+}
 
 /**
  * Dashboard Component
@@ -84,16 +101,16 @@ export class DashboardComponent implements OnInit{
 
 
   // User session data table
-  displayedColumns: string[] = ['radStation', 'date'];
+  displayedColumns: string[] = ['radStation', 'date', 'plotStatus'];
   dataSource!: UserSessionInfo[];
 
   // user input data
-  // user input data
   formGroup!: FormGroup;
+  maxDate = new Date();
   createForm() {
     this.formGroup = this.formBuilder.group({
-      radStation: new FormControl(),
-      date: new FormControl(),
+      radStation: new FormControl('', [Validators.required]),
+      date: new FormControl('', [Validators.required]),
       email:this.user.email,
     });
   }
@@ -113,9 +130,33 @@ export class DashboardComponent implements OnInit{
   }
 
   onSubmit(query: any) {
-    let result = this.weatherService.getWeatherPlot(query);
-    if (result) {
-    this.userService.postUserQuery(query);
-    }
+    this.plotQueryData(query);
+    this.postUserAction(query);
   }
+
+  postUserAction(query: any): void {
+    this.userService.postUserQuery(query).subscribe(data=>{
+      console.log('Success Post:'+ data);
+      // this._snackBar.open('User Query Success',undefined, { duration:2000 })
+    },
+    err => {
+      console.log('Error Post:'+ err);
+      // this._snackBar.open('User Query Failed',undefined, { duration:2000 })
+    })
+  }
+
+  plotQueryData(query: any): void {
+    this.weatherService.getWeatherPlot(query).subscribe( blob=> {
+      console.log(blob);
+      let objectURL = URL.createObjectURL(blob);
+      this.file = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      console.log('Plot Generation Success');
+      this._snackBar.open('Plot Generation Success',undefined, { duration:1000 });
+    },
+    err => {
+      console.log('Plot Generation Failed',err);
+      this._snackBar.open('Plot Generation Failed',undefined, { duration:1000 });
+    })
+  }
+
 }

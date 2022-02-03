@@ -23,7 +23,7 @@ export class UserService {
   }
 
   postUserQuery(query: any) {
-    console.log(query);
+    console.log("postUserQuery:",query);
     return this.http.post(this.userApiUrl+'/userQuery',query);
   }
 }

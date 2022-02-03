@@ -1,3 +1,4 @@
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +18,11 @@ import { AppComponent } from './app.component';
 import { AuthGuardService } from './auth-guard.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { CustomHttpInterceptor } from './http-interceptor';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -38,9 +43,15 @@ import { LoginComponent } from './login/login.component';
     MatMenuModule,
     FlexLayoutModule,
     MatFormFieldModule,
+    ReactiveFormsModule,
     MatInputModule,
     MatSelectModule,
-    MatTableModule
+    MatTableModule,
+    HttpClientModule,
+    MatSnackBarModule,
+    MatProgressBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [{
     provide: 'SocialAuthServiceConfig',
@@ -54,7 +65,12 @@ import { LoginComponent } from './login/login.component';
       ]
     }
   },
-    AuthGuardService],
+    AuthGuardService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomHttpInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
