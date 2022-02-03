@@ -9,7 +9,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  userApiUrl = 'http://localhost:4001';
+  userApiUrl = 'http://localhost:4001/userApi';
 
   getUserSession() {
     // const ELEMENT_DATA: UserSessionInfo[] = [

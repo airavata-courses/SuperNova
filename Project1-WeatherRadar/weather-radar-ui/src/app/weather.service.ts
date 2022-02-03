@@ -15,7 +15,7 @@ export class WeatherService {
     return this.radStationList;
   }
 
-  baseWeatherUrl = 'http://0.0.0.0:8000';
+  baseWeatherUrl = 'http://127.0.0.1:8000/weatherRadar';
   constructor(private http: HttpClient) { }
 
   getWeatherPlot(query: any): Observable<Blob>  {

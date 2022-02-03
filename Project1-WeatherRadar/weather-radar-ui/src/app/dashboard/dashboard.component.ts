@@ -1,7 +1,8 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
@@ -11,29 +12,13 @@ import { SpinnerService } from '../spinner.service';
 import { UserService } from '../user.service';
 import { WeatherService } from '../weather.service';
 
-
-/**
- * Error state matcher for input email values.
- */
- export class InputErrorStateMatcher implements ErrorStateMatcher {
-  /**
-   * Determines whether error state is
-   * @param control
-   * @param _form
-   * @returns true if error state
-   */
-  isErrorState(control: FormControl | null): boolean {
-    return !!(control?.invalid && (control.dirty || control.touched));
-  }
-}
-
 /**
  * Dashboard Component
  */
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit{
 
@@ -55,7 +40,8 @@ export class DashboardComponent implements OnInit{
     private weatherService: WeatherService,
     private _snackBar: MatSnackBar,
     private sanitizer: DomSanitizer,
-    public spinnerService: SpinnerService) {
+    public spinnerService: SpinnerService,
+    ) {
   }
 
 
@@ -102,7 +88,7 @@ export class DashboardComponent implements OnInit{
 
   // User session data table
   displayedColumns: string[] = ['radStation', 'date', 'plotStatus'];
-  dataSource!: UserSessionInfo[];
+  userSessionData = new MatTableDataSource<UserSessionInfo>();
 
   // user input data
   formGroup!: FormGroup;
@@ -117,12 +103,11 @@ export class DashboardComponent implements OnInit{
 
   populateUserSession() {
     this.userService.getUserSession().subscribe(data => {
-        this.dataSource = data;
+        this.userSessionData.data = data;
         console.log(data);
     })
   }
 
-  // weather radar data
   // weather radar data
   radStationList!: RadStation[];
   getRadStation() {
@@ -130,11 +115,33 @@ export class DashboardComponent implements OnInit{
   }
 
   onSubmit(query: any) {
-    this.plotQueryData(query);
+    const dateInput = new Date(query.date);
+    const dateFormatted = `${dateInput.getFullYear()}-${dateInput.getMonth()+1}-${dateInput.getDate()}`
+    console.log('query date:', dateFormatted);
+    query.date = dateFormatted;
     this.postUserAction(query);
+    this.plotQueryData(query);
   }
 
   postUserAction(query: any): void {
+    const currentData = this.userSessionData.data;
+    let isPresent = false;
+    for(let current of currentData){
+      if(current.radStation == query.radStation && current.date == query.date ) {
+        isPresent = true;
+        break;
+      }
+    }
+
+    if(!isPresent) {
+      const newUserSessionObject:UserSessionInfo = { id:0, userID:0, sessionTime:0, plotStatus:'In Process', radStation: query.radStation, date: query.date};
+      currentData.push(newUserSessionObject);
+      this.userSessionData.data = currentData;
+    } else {
+      this._snackBar.open('Query Already Processed',undefined, { duration:1000 });
+    }
+
+    console.log(this.userSessionData.data);
     this.userService.postUserQuery(query).subscribe(data=>{
       console.log('Success Post:'+ data);
       // this._snackBar.open('User Query Success',undefined, { duration:2000 })

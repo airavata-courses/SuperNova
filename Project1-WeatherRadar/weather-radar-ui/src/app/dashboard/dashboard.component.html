@@ -69,7 +69,7 @@ fxFlexFill >
   <!-- Section right -->
   <div fxFlex="20" class="sec-right" fxFlex.xs="15">
     <!-- Table -->
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+    <table mat-table [dataSource]="userSessionData" class="mat-elevation-z8 demo-table">
       <!-- RAD STATION Column -->
       <ng-container matColumnDef="radStation">
         <th mat-header-cell *matHeaderCellDef> RAD STATION </th>
@@ -84,7 +84,7 @@ fxFlexFill >
 
       <ng-container matColumnDef="plotStatus">
         <th mat-header-cell *matHeaderCellDef> PLOT STATUS </th>
-        <td mat-cell *matCellDef="let element"> TBD </td>
+        <td mat-cell *matCellDef="let element"> {{element.plotStatus}} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
