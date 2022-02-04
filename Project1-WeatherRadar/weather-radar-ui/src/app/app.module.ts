@@ -23,6 +23,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CustomHttpInterceptor } from './http-interceptor';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { PublicApi } from './public-api';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { MatNativeDateModule } from '@angular/material/core';
       provide: HTTP_INTERCEPTORS,
       useClass: CustomHttpInterceptor,
       multi: true
-    }],
+    },
+  PublicApi],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
