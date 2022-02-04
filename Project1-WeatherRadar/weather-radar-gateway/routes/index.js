@@ -8,13 +8,20 @@ const fs = require('fs')
 router.all('/:apiName/:path', (req, res) => {
     console.log(req.params.apiName)
     if(registry.services[req.params.apiName]){
+        formattedPath = registry.services[req.params.apiName].url+ req.originalUrl;
+        console.log('Path Routed:'+ formattedPath)
         axios({
             method: req.method,
-            url: registry.services[req.params.apiName].url + req.params.path,
+            url: formattedPath,
             headers: req.headers,
             data: req.body
         }).then((response) => {
-            res.send(response.data)
+            console.log('API SUCCESS RESPONSE:'+ formattedPath +':'+ response.data);
+            res.send({'Content-Type':'image/gif'},response.data)
+        },
+        (error)=> {
+            console.log('API ERROR RESPONSE:'+ formattedPath +':'+ error.error);
+            res.send(error.error);
         })
     }else {
         res.send("API Name doesn't exist")
