@@ -20,7 +20,7 @@ public class SessionInfo implements Serializable{
     private Integer id;
 
     @Column
-    private Integer userId;
+    private Integer userID;
 
     @Column
     private String radStation;
@@ -31,9 +31,9 @@ public class SessionInfo implements Serializable{
     @Temporal(TemporalType.DATE)
     private Calendar dateTime;
 
-    public SessionInfo(Integer id, Integer userId, String radStation, Date sessionTime, Calendar date) {
+    public SessionInfo(Integer id, Integer userID, String radStation, Date sessionTime, Calendar date) {
         this.id = id;
-        this.userId = userId;
+        this.userID = userID;
         this.radStation = radStation;
         this.sessionTime = sessionTime;
         this.dateTime = date;
@@ -50,12 +50,12 @@ public class SessionInfo implements Serializable{
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getUserID() {
+        return userID;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserID(Integer userID) {
+        this.userID = userID;
     }
 
     public String getRadStation() {
