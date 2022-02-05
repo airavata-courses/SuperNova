@@ -16,7 +16,7 @@ import { GoogleLoginProvider, SocialLoginModule } from 'angularx-social-login';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuardService } from './auth-guard.service';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent, dateFormatPipe } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -29,7 +29,8 @@ import { PublicApi } from './public-api';
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    dateFormatPipe
   ],
   imports: [
     BrowserModule,

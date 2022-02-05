@@ -16,11 +16,11 @@ export class WeatherService {
     return this.radStationList;
   }
 
-  // baseWeatherUrl = 'http://127.0.0.1:8000/weatherRadar';
+  // baseWeatherUrl = 'http://127.0.0.1:8000/weatherApi';
   constructor(private http: HttpClient, private publicApi: PublicApi) { }
 
-  getWeatherPlot(query: any): Observable<Blob>  {
-    console.log('Query Params:' + query)
-    return this.http.get(this.publicApi.gatewayURL+this.publicApi.weatherRadarEndpoint+'?radar_id='+query.radStation+'&date='+query.date, { responseType: 'blob' });
+  getWeatherPlot(userQuery: any): Observable<Blob>  {
+    console.log('Query Params:' + userQuery)
+    return this.http.get(this.publicApi.weatherApiURL+this.publicApi.weatherRadarEndpoint+'?radar_id='+userQuery.radStation+'&date='+userQuery.date, { responseType: 'blob' });
   }
 }

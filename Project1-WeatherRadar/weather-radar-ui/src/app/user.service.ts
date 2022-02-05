@@ -13,15 +13,8 @@ export class UserService {
 
   // userApiUrl = 'http://localhost:4001/userApi';
 
-  getUserSession() {
-    // const ELEMENT_DATA: UserSessionInfo[] = [
-    //   {radStation: 'Indianapolis', date: '10-10-2021'},
-    //   {radStation: 'New York', date: '10-10-2021'},
-    // ];
-
-    return this.http.get<UserSessionInfo[]>(this.publicApi.gatewayURL+this.publicApi.userSessionInfoEndpoint);
-
-    // return ELEMENT_DATA;
+  getUserSession(emailAddress: string) {
+    return this.http.get<UserSessionInfo[]>(this.publicApi.gatewayURL+this.publicApi.userSessionInfoEndpoint+'?emailAddress='+emailAddress);
   }
 
   postUserQuery(query: any) {
