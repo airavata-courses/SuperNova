@@ -9,7 +9,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  userApiUrl = 'http://localhost:4001';
+  userApiUrl = 'http://localhost:4001/userApi';
 
   getUserSession() {
     // const ELEMENT_DATA: UserSessionInfo[] = [
@@ -23,7 +23,7 @@ export class UserService {
   }
 
   postUserQuery(query: any) {
-    console.log(query);
+    console.log("postUserQuery:",query);
     return this.http.post(this.userApiUrl+'/userQuery',query);
   }
 }

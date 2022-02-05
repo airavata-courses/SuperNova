@@ -1,6 +1,8 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
@@ -16,7 +18,7 @@ import { WeatherService } from '../weather.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit{
 
@@ -38,7 +40,8 @@ export class DashboardComponent implements OnInit{
     private weatherService: WeatherService,
     private _snackBar: MatSnackBar,
     private sanitizer: DomSanitizer,
-    public spinnerService: SpinnerService) {
+    public spinnerService: SpinnerService,
+    ) {
   }
 
 
@@ -84,28 +87,27 @@ export class DashboardComponent implements OnInit{
 
 
   // User session data table
-  displayedColumns: string[] = ['radStation', 'date'];
-  dataSource!: UserSessionInfo[];
+  displayedColumns: string[] = ['radStation', 'date', 'plotStatus'];
+  userSessionData = new MatTableDataSource<UserSessionInfo>();
 
   // user input data
-  // user input data
   formGroup!: FormGroup;
+  maxDate = new Date();
   createForm() {
     this.formGroup = this.formBuilder.group({
-      radStation: new FormControl(),
-      date: new FormControl(),
+      radStation: new FormControl('', [Validators.required]),
+      date: new FormControl('', [Validators.required]),
       email:this.user.email,
     });
   }
 
   populateUserSession() {
     this.userService.getUserSession().subscribe(data => {
-        this.dataSource = data;
+        this.userSessionData.data = data;
         console.log(data);
     })
   }
 
-  // weather radar data
   // weather radar data
   radStationList!: RadStation[];
   getRadStation() {
@@ -113,9 +115,55 @@ export class DashboardComponent implements OnInit{
   }
 
   onSubmit(query: any) {
-    let result = this.weatherService.getWeatherPlot(query);
-    if (result) {
-    this.userService.postUserQuery(query);
-    }
+    const dateInput = new Date(query.date);
+    const dateFormatted = `${dateInput.getFullYear()}-${dateInput.getMonth()+1}-${dateInput.getDate()}`
+    console.log('query date:', dateFormatted);
+    query.date = dateFormatted;
+    this.postUserAction(query);
+    this.plotQueryData(query);
   }
+
+  postUserAction(query: any): void {
+    const currentData = this.userSessionData.data;
+    let isPresent = false;
+    for(let current of currentData){
+      if(current.radStation == query.radStation && current.date == query.date ) {
+        isPresent = true;
+        break;
+      }
+    }
+
+    if(!isPresent) {
+      const newUserSessionObject:UserSessionInfo = { id:0, userID:0, sessionTime:0, plotStatus:'In Process', radStation: query.radStation, date: query.date};
+      currentData.push(newUserSessionObject);
+      this.userSessionData.data = currentData;
+    } else {
+      this._snackBar.open('Query Already Processed',undefined, { duration:1000 });
+    }
+
+    console.log(this.userSessionData.data);
+    this.userService.postUserQuery(query).subscribe(data=>{
+      console.log('Success Post:'+ data);
+      // this._snackBar.open('User Query Success',undefined, { duration:2000 })
+    },
+    err => {
+      console.log('Error Post:'+ err);
+      // this._snackBar.open('User Query Failed',undefined, { duration:2000 })
+    })
+  }
+
+  plotQueryData(query: any): void {
+    this.weatherService.getWeatherPlot(query).subscribe( blob=> {
+      console.log(blob);
+      let objectURL = URL.createObjectURL(blob);
+      this.file = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      console.log('Plot Generation Success');
+      this._snackBar.open('Plot Generation Success',undefined, { duration:1000 });
+    },
+    err => {
+      console.log('Plot Generation Failed',err);
+      this._snackBar.open('Plot Generation Failed',undefined, { duration:1000 });
+    })
+  }
+
 }

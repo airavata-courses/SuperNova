@@ -8,7 +8,7 @@
   color: #fff;
   line-height: 50px;
   text-align: center;
-  background:#1976D2;
+  background:red;
   vertical-align:middle;
   margin: 10px 10px;
 }
@@ -37,6 +37,8 @@
 
 .dashboard-card {
   margin-top: 100px;
+  width: fit-content;
+  background-color:blanchedalmond;
 }
 
 .card-content{
@@ -51,14 +53,15 @@
 
 .submit-data {
   width: 200px;
-  height: 50px;
+  height: 55px;
+  vertical-align: top;
 }
 // card css end
 
 //mat-table css
 .demo-table {
   width: 100%;
-  margin-top: 241px;
+  margin-top: 100px;
 }
 
 .mat-column-demo-position {

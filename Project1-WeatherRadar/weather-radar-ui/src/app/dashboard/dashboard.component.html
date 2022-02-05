@@ -1,12 +1,12 @@
 <!-- Toolbar -->
-<mat-toolbar class="shadow">
+<mat-toolbar color="primary">
   <span>Weather Radar</span>
   <span class="toolbar-spacer"></span>
   <div class="circle">{{nameIntial()}}</div>
   <button mat-raised-button (click)="logout()">Logout</button>
 </mat-toolbar>
 <!-- Toolbar End -->
-
+<mat-progress-bar color="accent" mode="indeterminate" *ngIf="spinnerService.visibility | async"></mat-progress-bar>
 <!-- User dashboard -->
 <div class="content"
 fxLayout="row"
@@ -14,7 +14,7 @@ fxLayout.xs="column"
 fxFlexFill >
   <!-- Section right -->
   <div fxFlex="20" class="sec-right" fxFlex.xs="55">
-      first-section
+    <!-- side-bar placeholder -->
   </div>
   <!-- Section right end -->
 
@@ -25,10 +25,13 @@ fxFlexFill >
     <mat-card class="dashboard-card">
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title class="dashboard-title">Fetch Weather Data</mat-card-title>
+        <mat-card-title class="dashboard-title" >Fetch Weather Data</mat-card-title>
       </mat-card-header>
+
       <mat-card-content class="card-content">
-        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
+        <section>
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)"  class="form">
+          <!-- Rad Station input -->
           <mat-form-field appearance="fill">
             <mat-label>Select</mat-label>
             <mat-select formControlName="radStation">
@@ -36,14 +39,27 @@ fxFlexFill >
               <mat-option value="{{radStationData.value}}"> {{radStationData.name}} </mat-option>
               </div>
             </mat-select>
+            <mat-error *ngIf="this.formGroup.hasError('required')">
+              Rad Station is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
+          <!-- Date input -->
           <mat-form-field appearance="fill">
-            <input matInput type="date" formControlName="date">
+            <input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="date" >
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker ></mat-datepicker>
+            <mat-error *ngIf="this.formGroup.hasError('required')">
+              Date is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
-          <button mat-raised-button class="submit-data" type="submit" >Plot</button>
+
+          <button mat-raised-button class="submit-data" type="submit" [disabled]="!formGroup.valid" >Plot</button>
         </form>
+      </section>
       </mat-card-content>
-      <img mat-card-image src="https://geology.com/world/the-united-states-of-america-map.gif" alt="Photo of a Shiba Inu">
+
+      <img *ngIf="!file" src='../../assets/default_plot.png'>
+      <img *ngIf="file" mat-card-image [src]='file' alt="Photo of a Shiba Inu">
     </mat-card>
     <!-- mat card  end-->
 
@@ -53,7 +69,7 @@ fxFlexFill >
   <!-- Section right -->
   <div fxFlex="20" class="sec-right" fxFlex.xs="15">
     <!-- Table -->
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+    <table mat-table [dataSource]="userSessionData" class="mat-elevation-z8 demo-table">
       <!-- RAD STATION Column -->
       <ng-container matColumnDef="radStation">
         <th mat-header-cell *matHeaderCellDef> RAD STATION </th>
@@ -64,6 +80,11 @@ fxFlexFill >
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef> DATE </th>
         <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="plotStatus">
+        <th mat-header-cell *matHeaderCellDef> PLOT STATUS </th>
+        <td mat-cell *matCellDef="let element"> {{element.plotStatus}} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
