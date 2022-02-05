@@ -1,11 +1,13 @@
 package com.indiana.userApi.model;
 
 
-import java.io.Serializable;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -13,13 +15,7 @@ import lombok.NoArgsConstructor;
 public class SessionRequestInfo implements Serializable {
 
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-
-	private String emailAddress;
+    private String emailAddress;
     public String getEmailAddress() {
         return emailAddress;
     }
@@ -32,16 +28,15 @@ public class SessionRequestInfo implements Serializable {
     public void setRadStation(String radStation) {
         this.radStation = radStation;
     }
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
     private String radStation;
-   
-
-    private String date;
+    @DateTimeFormat(pattern="dd/MM/yyyy")
+    private Date date;
 
 
 

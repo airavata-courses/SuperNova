@@ -1,15 +1,10 @@
 package com.indiana.userApi.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 
 @Entity
@@ -33,14 +28,15 @@ public class SessionInfo implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date sessionTime;
 
-    private String date;
+    @Temporal(TemporalType.DATE)
+    private Calendar dateTime;
 
-    public SessionInfo(Integer id, Integer userID, String radStation, Date sessionTime, String date) {
+    public SessionInfo(Integer id, Integer userID, String radStation, Date sessionTime, Calendar date) {
         this.id = id;
         this.userID = userID;
         this.radStation = radStation;
         this.sessionTime = sessionTime;
-        this.date = date;
+        this.dateTime = date;
     }
 
     public SessionInfo() {
@@ -78,11 +74,11 @@ public class SessionInfo implements Serializable{
         this.sessionTime = sessionTime;
     }
 
-    public String getDate() {
-        return date;
+    public Calendar getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateTime(Calendar dateTime) {
+        this.dateTime = dateTime;
     }
 }
