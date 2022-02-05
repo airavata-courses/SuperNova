@@ -11,7 +11,7 @@ from PIL import Image
 from os.path import exists
 matplotlib.use('Agg')
 
-def plot_reflectivity(radar_id, year, month, day):
+def plot_reflectivity(radar_id, month, day, year):
     try:
         plot_path = './output/{0}-{1}-{2}-{3}.gif'.format(radar_id, year, month, day)
         if exists(plot_path):
