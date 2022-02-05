@@ -16,19 +16,21 @@ import { GoogleLoginProvider, SocialLoginModule } from 'angularx-social-login';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuardService } from './auth-guard.service';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent, dateFormatPipe } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CustomHttpInterceptor } from './http-interceptor';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { PublicApi } from './public-api';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    dateFormatPipe
   ],
   imports: [
     BrowserModule,
@@ -70,7 +72,8 @@ import { MatNativeDateModule } from '@angular/material/core';
       provide: HTTP_INTERCEPTORS,
       useClass: CustomHttpInterceptor,
       multi: true
-    }],
+    },
+  PublicApi],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
