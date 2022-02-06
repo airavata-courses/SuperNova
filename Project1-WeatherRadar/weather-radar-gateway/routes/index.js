@@ -14,12 +14,10 @@ router.all('/:apiName/:path', (req, res) => {
             method: req.method,
             url: formattedPath,
             headers: req.headers,
-            data: req.body,
-            responseType: 'arraybuffer'
+            data: req.body
         }).then((response) => {
             console.log('API SUCCESS RESPONSE:'+ formattedPath +':'+ response.data);
-            data = Buffer.from(response.data, 'binary').toString('base64')
-            res.send(data)
+            res.send(response.data)
         },
         (error)=> {
             console.log('API ERROR RESPONSE:'+ formattedPath +':'+ error.error);
