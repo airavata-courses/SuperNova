@@ -73,18 +73,18 @@ app.get('/weatherApi/plot', cache, getPlot);
 // Query Status API to show on dashboard
 app.post('/weatherApi/querystatus', function(req, res){
     console.log("query status endpoint CONNECT");
-    var jsonObj = req.body
+    let jsonObj = req.body
     console.log("Input JSON: "+jsonObj);
   
     result = []
-    for (var i = 0; i < jsonObj.length; i++){
-        var obj = jsonObj[i];
+    for (let i = 0; i < jsonObj.length; i++){
+        let obj = jsonObj[i];
         let redis_key = obj.radar_id + obj.date
         console.log(redis_key)
         client.get(redis_key, (err, data) => {
             if (err) {
                 console.log("Error: ", err)
-                //return res.sendStatus(500);
+                return res.sendStatus(500);
             }
         
             if (data !== null) {
@@ -106,10 +106,12 @@ app.post('/weatherApi/querystatus', function(req, res){
                 console.log("element added in JSON: " + output);
                 result.push(output);
             }
-            //console.log("Response: "+ result)
-            return res.send(result);
+
+            if(i == jsonObj.length-1) {
+                return res.send(result); 
+            }            
         })
-    } 
+    }
 })
 
 app.listen(PORT, () => {
