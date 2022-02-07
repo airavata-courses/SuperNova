@@ -31,8 +31,3 @@ docker build -t supernova/weather-radar-ui-app .
 
 ## Docker Run:
 docker run -d -it -p 4200:4200/tcp supernova/weather-radar-ui-app:latest
-
-# Used for nginx: under development - [Do Not Use]
-docker run -p 8000:80 -d supernova/weather-radar-ui-app:latest
-
-docker stop weather-radar-ui-app
