@@ -1,8 +1,8 @@
-const express = require('express')
-const router = express.Router()
-const axios = require('axios')
-const registry = require('./registry.json')
-const fs = require('fs')
+const express = require('express');
+const router = express.Router();
+const axios = require('axios');
+const registry = require('./registry.json');
+const fs = require('fs');
 
 /* API endpoint returns requsted API response */
 router.all('/:apiName/:path', (req, res) => {
@@ -17,7 +17,7 @@ router.all('/:apiName/:path', (req, res) => {
             data: req.body
         }).then((response) => {
             console.log('API SUCCESS RESPONSE:'+ formattedPath +':'+ response.data);
-            res.send({'Content-Type':'image/gif'},response.data)
+            res.send(response.data)
         },
         (error)=> {
             console.log('API ERROR RESPONSE:'+ formattedPath +':'+ error.error);

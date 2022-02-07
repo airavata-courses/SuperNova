@@ -12,8 +12,8 @@
         "port": 4001,
         "url": "http://localhost:4001"
       },
-      "weatherRadar": {
-        "apiName": "weatherRadar",
+      "weatherApi": {
+        "apiName": "weatherApi",
         "host": "http://localhost",
         "port": 8000,
         "url": "http://localhost:8000"
