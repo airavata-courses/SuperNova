@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
+import b64toBlob from 'b64-to-blob';
 import { PlotStatus } from '../modal/plot-status';
 import { RadStation } from '../modal/rad-station';
 import { RadStationList } from '../modal/rad-station-list';
@@ -117,13 +118,20 @@ export class DashboardComponent implements OnInit{
 
   populateUserSession() {
     this.userService.getUserSession(this.user.email).subscribe(data => {
+        console.log('User API: Session Info Success:', data);
         this.userSessionData.data = data;
-        console.log(data);
+        for(let d of data) {
+          d.plotStatus= PlotStatus.PROCESS_DONE;
+        }
         this.weatherService.getQueryStatus(data).subscribe(data => {
-          console.log('Cache Query Status:', data);
+          console.log('Weather Cache: Query Status Success:', data);
           this.userSessionData.data = data;
+        }, error => {
+          console.log('Weather Cache: Query Status Fail:', error);
         })
 
+    }, error => {
+      console.log('User API: Session Info Fail:', error);
     })
   }
 
@@ -163,8 +171,9 @@ export class DashboardComponent implements OnInit{
   }
 
   plotQueryData(userQuery: any): void {
-    this.weatherService.getWeatherPlot(userQuery).subscribe( blob=> {
-      console.log(blob);
+    this.weatherService.getWeatherPlot(userQuery).subscribe( base64PlotData=> {
+      const contentType = 'image/gif';
+      let blob = b64toBlob(base64PlotData, contentType);
       let objectURL = URL.createObjectURL(blob);
       this.file = this.sanitizer.bypassSecurityTrustUrl(objectURL);
       this._snackBar.open('Plot Generation Success',undefined, { duration:1000 });

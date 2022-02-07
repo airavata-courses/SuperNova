@@ -12,12 +12,12 @@ export class WeatherService {
 
   constructor(private http: HttpClient, private publicApi: PublicApi) { }
 
-  getWeatherPlot(userQuery: any): Observable<Blob>  {
+  getWeatherPlot(userQuery: any): Observable<any>  {
     console.log('Query Params:' + userQuery)
-    return this.http.get(this.publicApi.weatherServiceURL+this.publicApi.weatherPlot+'?radar_id='+userQuery.radStation+'&date='+userQuery.date, { responseType: 'blob' });
+    return this.http.get(this.publicApi.gatewayURL+this.publicApi.weatherPlot+'?radar_id='+userQuery.radStation+'&date='+userQuery.date,{responseType: 'text'});
   }
 
   getQueryStatus(data:UserSessionInfo[]) {
-    return this.http.post<UserSessionInfo[]>(this.publicApi.weatherServiceURL+ this.publicApi.weatherPlotStatus, data);
+    return this.http.post<UserSessionInfo[]>(this.publicApi.gatewayURL+ this.publicApi.weatherPlotStatus, data);
   }
 }
