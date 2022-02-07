@@ -6,7 +6,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
+import { PlotStatus } from '../modal/plot-status';
 import { RadStation } from '../modal/rad-station';
+import { RadStationList } from '../modal/rad-station-list';
 import { UserQuery } from '../modal/user-query';
 import { UserSessionInfo } from '../modal/user-session-info';
 import { SpinnerService } from '../spinner.service';
@@ -117,13 +119,18 @@ export class DashboardComponent implements OnInit{
     this.userService.getUserSession(this.user.email).subscribe(data => {
         this.userSessionData.data = data;
         console.log(data);
+        this.weatherService.getQueryStatus(data).subscribe(data => {
+          console.log('Cache Query Status:', data);
+          this.userSessionData.data = data;
+        })
+
     })
   }
 
   // weather radar data
   radStationList!: RadStation[];
   getRadStation() {
-    this.radStationList = this.weatherService.getRadStationList();
+    this.radStationList = RadStationList.radStationList;
   }
 
   onSubmit(query: any) {
@@ -134,7 +141,7 @@ export class DashboardComponent implements OnInit{
       emailAddress: this.user.email
     };
     this.postUserAction(userQuery);
-    this.plotQueryData(userQuery);
+    this.sendQuery(userQuery);
     this.populateUserSession();
   }
 
@@ -166,6 +173,28 @@ export class DashboardComponent implements OnInit{
       console.log('Plot Generation Failed',err);
       this._snackBar.open('Plot Generation Failed',undefined, { duration:1000 });
     })
+  }
+
+  sendQuery(userQuery: any): void {
+    this._snackBar.open('Query Added in Queue',undefined, { duration:1000 });
+    this.weatherService.getWeatherPlot(userQuery).subscribe( blob=> {
+      this.populateUserSession();
+    },
+    err => {
+      this.populateUserSession();
+    })
+  }
+
+  currentRadStation: string = 'NA';
+  currentRadStationDate: string = 'NA';
+
+  OnRowClick(row: any) {
+    console.log(row.radStation);
+    if (row.plotStatus == PlotStatus.PROCESS_DONE) {
+      this.plotQueryData({radStation:'KIND', date:'02-04-2022'});
+      this.currentRadStation = RadStationList.getStationName[row.radStation];
+      this.currentRadStationDate = row.date;
+    }
   }
 
 }

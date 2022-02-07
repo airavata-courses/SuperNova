@@ -3,8 +3,15 @@
 export class PublicApi {
 
   gatewayURL = 'http://localhost:8081';
-  weatherApiURL = 'http://localhost:8000';
-  weatherRadarEndpoint = '/weatherApi/plot';
+  weatherServiceURL = 'http://localhost:4001';
+
+
+  // weather service
+  weatherPlot= '/weatherCache/plot';
+  weatherPlotStatus = '/weatherCache/queryStatus';
+
+
+  // user service
   userSessionInfoEndpoint = '/userApi/sessionInfo'
   userQueryEndpoint = '/userApi/userQuery'
 
