@@ -25,3 +25,14 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Docker Build:
+docker build -t supernova/weather-radar-ui-app .
+
+## Docker Run:
+docker run -d -it -p 4200:4200/tcp supernova/weather-radar-ui-app:latest
+
+# Used for nginx: under development - [Do Not Use]
+docker run -p 8000:80 -d supernova/weather-radar-ui-app:latest
+
+docker stop weather-radar-ui-app
