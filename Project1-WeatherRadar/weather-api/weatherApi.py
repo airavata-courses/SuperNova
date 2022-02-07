@@ -47,10 +47,16 @@ async def read_root(radar_id, date):
 
 def setup():
     print('welcome to weather radar api')
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=4600)
+
 
 
 if __name__ == '__main__':
     weatherApi.setup()
 
+## Run via docker
 
+# ```
+# docker build --build-arg run_env=dev . -t weatherradar:test
+# docker run -e PORT=8000 -p 8000:8000 weatherradar:test
+# ```
