@@ -9,14 +9,14 @@
       "userApi": {
         "apiName": "userApi",
         "host": "http://localhost",
-        "port": 4001,
-        "url": "http://localhost:4001"
+        "port": 9004,
+        "url": "http://localhost:4700"
       },
       "weatherApi": {
         "apiName": "weatherApi",
         "host": "http://localhost",
-        "port": 8000,
-        "url": "http://localhost:8000"
+        "port": 9001,
+        "url": "http://localhost:4400"
       }
     }
   }
