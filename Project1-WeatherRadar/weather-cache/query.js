@@ -1,8 +1,11 @@
 class QueryResponse {
     constructor(radar_id, date, status) {
-        this.radar_id = radar_id
+        this.id = id
+        this.userID = userID
+        this.radStation = radStation
+        this.sessionTime = sessionTime
         this.date = date
-        this.status = status
+        this.plotStatus = plotStatus
     }
 }
 

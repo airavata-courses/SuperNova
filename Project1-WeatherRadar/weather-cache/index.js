@@ -18,20 +18,23 @@ app.use(express.json());
 
 async function getPlot(req, res, next) {
     try {
+        client.set(radar_id+date+'status', 'PROCESS_IN'); // weather plot status
         axios({
             method: req.method,
             url: formattedPath,
             headers: req.headers,
             data: req.body
         }).then((response) => {
-            console.log('API SUCCESS RESPONSE:'+ formattedPath +':'+data);
+            console.log('API SUCCESS RESPONSE:'+ formattedPath +':'+response.data);
             // Set data to Redis
-            client.set(radar_id+date, JSON.stringify(data));
+            client.set(radar_id+date, JSON.stringify(response.data)); // weather plot data
+            client.set(radar_id+date+'status', 'PROCESS_DONE'); // weather plot status
             console.log('Fetching Data...');
-            res.send(data)
+            res.send(response.data)
         },
         (error)=> {
             console.log('API ERROR RESPONSE:'+ formattedPath +':'+ error.error);
+            client.set(radar_id+date+'status', 'PROCESS_FAIL'); // weather plot status
             res.send(error.error);
         })
     } catch (err) {
@@ -43,7 +46,7 @@ async function getPlot(req, res, next) {
 // Cache middleware
 function cache(req, res, next) {
     console.log(req.params.apiName)
-    weatherApiUrl = 'http://localhost:8000'
+    weatherApiUrl = 'http://localhost:4600'
     formattedPath = weatherApiUrl + req.originalUrl;
     console.log('Path Routed:'+ formattedPath)
     current_url = new URL(formattedPath);
@@ -90,18 +93,24 @@ app.post('/weatherApi/querystatus', function(req, res){
             if (data !== null) {
                 console.log("query found in cache ...");
                 let output = new QueryResponse(
-                    obj.radar_id,
+                    obj.id,
+                    obj.userID,
+                    obj.radStation,
+                    obj.sessionTime,
                     obj.date,
-                    'True'
+                    'PROCESS_DONE'
                 );
                 console.log("element added in JSON: " + output);
                 result.push(output);
             }else {
                 console.log("query not found in cache ...");
                 let output = new QueryResponse(
-                    obj.radar_id,
+                    obj.id,
+                    obj.userID,
+                    obj.radStation,
+                    obj.sessionTime,
                     obj.date,
-                    'False'
+                    'PROCESS_FAIL'
                 );
                 console.log("element added in JSON: " + output);
                 result.push(output);
