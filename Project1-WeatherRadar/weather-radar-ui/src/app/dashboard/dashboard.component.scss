@@ -1,0 +1,109 @@
+// toolbar css
+:host {
+.circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 30px;
+  color: #fff;
+  line-height: 50px;
+  text-align: center;
+  background:red;
+  vertical-align:middle;
+  margin: 10px 10px;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+// toolbar css end
+
+//section css
+.content {
+ background-color: azure;
+}
+.sec-right {
+  margin: 0 50px;
+}
+// section css end
+
+// card css
+
+.mat-card-header {
+  margin: auto;
+  width:fit-content;
+}
+
+.selectedLabel {
+  border-style: solid;
+  border-color: black;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 20px;
+}
+
+.selectedValue {
+  color: green;
+}
+
+.dashboard-card {
+  margin-top: 100px;
+  width: fit-content;
+  background-color:whitesmoke;
+}
+
+.card-content{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.mat-form-field {
+  margin: 0 10px;
+}
+
+.submit-data {
+  width: 200px;
+  height: 55px;
+  vertical-align: top;
+}
+// card css end
+
+//mat-table css
+.demo-table {
+  width: 100%;
+  margin-top: 100px;
+}
+
+th.mat-header-cell {
+  text-align: center;
+}
+
+td {
+  text-align: center;
+}
+
+.mat-column-demo-position {
+  width: 32px;
+  border-right: 1px solid currentColor;
+  padding-right: 24px;
+  text-align: center;
+}
+
+.mat-column-demo-name {
+  padding-left: 16px;
+  font-size: 20px;
+}
+
+.mat-column-demo-weight {
+  font-style: italic;
+}
+
+.mat-column-demo-symbol {
+  width: 32px;
+  text-align: center;
+  font-weight: bold;
+}
+// table css end
+}

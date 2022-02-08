@@ -1,0 +1,105 @@
+<!-- Toolbar -->
+<mat-toolbar color="primary">
+  <span>Weather Radar</span>
+  <span class="toolbar-spacer"></span>
+  <div class="circle">{{nameIntial()}}</div>
+  <button mat-raised-button (click)="logout()">Logout</button>
+</mat-toolbar>
+<!-- Toolbar End -->
+<mat-progress-bar color="accent" mode="indeterminate" *ngIf="spinnerService.visibility | async"></mat-progress-bar>
+<!-- User dashboard -->
+<div class="content"
+fxLayout="row"
+fxLayout.xs="column"
+fxFlexFill >
+  <!-- Section right -->
+  <div fxFlex="20" class="sec-right" fxFlex.xs="55">
+    <!-- side-bar placeholder -->
+  </div>
+  <!-- Section right end -->
+
+  <!-- Section center -->
+  <div fxFlex="60" class="section-center" >
+
+    <!-- mat card  -->
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title class="dashboard-title" >Fetch Weather Data</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content class="card-content">
+        <section>
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)"  class="form">
+          <!-- Rad Station input -->
+          <mat-form-field appearance="fill">
+            <mat-label>Select</mat-label>
+            <mat-select formControlName="radStation">
+              <div  *ngFor="let radStationData of radStationList">
+              <mat-option value="{{radStationData.value}}"> {{radStationData.name}} </mat-option>
+              </div>
+            </mat-select>
+            <mat-error *ngIf="this.formGroup.hasError('required')">
+              Rad Station is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <!-- Date input -->
+          <mat-form-field appearance="fill">
+            <input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="date" >
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker ></mat-datepicker>
+            <mat-error *ngIf="this.formGroup.hasError('required')">
+              Date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <button mat-raised-button class="submit-data" type="submit" [disabled]="!formGroup.valid" >Plot</button>
+        </form>
+      </section>
+      </mat-card-content>
+      <div  class="selectedLabel">
+       Currently Showing | RAD STATION: <span class="selectedValue">{{currentRadStation}}</span> PLOT DATE: <span class="selectedValue">{{currentRadStationDate}}</span>
+      </div>
+      <img *ngIf="!file" src='../../assets/default_plot.png'>
+      <img *ngIf="file" mat-card-image [src]='file'>
+    </mat-card>
+    <!-- mat card  end-->
+
+  </div>
+  <!-- Section center end-->
+
+  <!-- Section right -->
+  <div fxFlex="20" class="sec-right" fxFlex.xs="15">
+    <!-- Table -->
+    <table mat-table [dataSource]="userSessionData" class="mat-elevation-z8 demo-table" >
+      <!-- RAD STATION Column -->
+      <ng-container matColumnDef="radStation">
+        <th mat-header-cell *matHeaderCellDef> RAD STATION </th>
+        <td mat-cell *matCellDef="let element"> {{element.radStation}} </td>
+      </ng-container>
+
+      <!-- DATE Column -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef> DATE </th>
+        <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="plotStatus">
+        <th mat-header-cell *matHeaderCellDef> PLOT STATUS </th>
+        <td mat-cell *matCellDef="let element">
+          <img *ngIf="element.plotStatus =='PROCESS_IN'" src='https://c.tenor.com/UDC3OVGA1jcAAAAi/icon.gif' [width]="20" [height]="40">
+          <img *ngIf="element.plotStatus =='PROCESS_DONE'" src='../../assets/check-circle.gif' [width]="20" [height]="40">
+          <img *ngIf="element.plotStatus =='PROCESS_FAIL'" src='../../assets/icons8-error.gif' [width]="20" [height]="40">
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row  (click)="OnRowClick(row)"  *matRowDef="let row; columns: displayedColumns;" ></tr>
+    </table>
+    <!-- Table -->
+  </div>
+  <!-- Section right end-->
+
+</div>
+<!-- User dashboard -->
+
