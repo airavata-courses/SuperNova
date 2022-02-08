@@ -1,0 +1,16 @@
+{
+  "services": {
+    "userApi": {
+      "apiName": "userApi",
+      "host": "http://user-api-app:4700",
+      "port": 4700,
+      "url": "http://user-api-app:4700"
+    },
+    "weatherApi": {
+      "apiName": "weatherApi",
+      "host":"http://weather-cache-app",
+      "port": 4400,
+      "url": "http://weather-cache-app:4400"
+    }
+  }
+}
