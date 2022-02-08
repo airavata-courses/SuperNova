@@ -67,6 +67,7 @@ export class DashboardComponent implements OnInit{
     this.login();
     this.createForm();
     this.getRadStation();
+    this.getRadStationDict()
     setInterval(()=> {
       this.populateUserSession();
     }, 5000);
@@ -142,6 +143,11 @@ export class DashboardComponent implements OnInit{
   radStationList!: RadStation[];
   getRadStation() {
     this.radStationList = RadStationList.radStationList;
+  }
+
+  radStationDictionary: any;
+  getRadStationDict() {
+    this.radStationDictionary = RadStationList.getStationName;
   }
 
   onSubmit(query: any) {
