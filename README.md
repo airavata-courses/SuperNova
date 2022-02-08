@@ -1,15 +1,11 @@
 # SuperNova
+
 Spring 2022 Project
 
-# Weather Radar Api
+# Developer
+1. Sanket Darwante
+2. Sumedh Salvi
+3. Richa Jha
 
-
-## Docker
-
-## Docker Build:
-docker build -t supernova/weather-radar-api-app .
-
-## Docker Run:
-docker run -d --net weather-radar-net --name weather-radar-api-app -p 4600:4600/tcp supernova/weather-radar-api-app:latest
-
-
+# Napkin Diagram
+![](https://github.com/airavata-courses/SuperNova/blob/dev-wiki-data/wiki/wiki_images/napkinDaigram.jpg)
