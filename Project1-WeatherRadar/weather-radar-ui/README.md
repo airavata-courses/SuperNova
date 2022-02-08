@@ -30,4 +30,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 docker build -t supernova/weather-radar-ui-app .
 
 ## Docker Run:
-docker run -d -it -p 4200:4200/tcp supernova/weather-radar-ui-app:latest
+docker run -d --net weather-radar-net --name weather-radar-ui-app -p 4200:4200/tcp supernova/weather-radar-ui-app:latest

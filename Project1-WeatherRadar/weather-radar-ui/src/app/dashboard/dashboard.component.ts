@@ -67,6 +67,9 @@ export class DashboardComponent implements OnInit{
     this.login();
     this.createForm();
     this.getRadStation();
+    setInterval(()=> {
+      this.populateUserSession();
+    }, 5000);
     this.populateUserSession();
   }
 
@@ -120,9 +123,9 @@ export class DashboardComponent implements OnInit{
     this.userService.getUserSession(this.user.email).subscribe(data => {
         console.log('User API: Session Info Success:', data);
         this.userSessionData.data = data;
-        for(let d of data) {
-          d.plotStatus= PlotStatus.PROCESS_DONE;
-        }
+        // for(let d of data) {
+        //   d.plotStatus= PlotStatus.PROCESS_DONE;
+        // }
         this.weatherService.getQueryStatus(data).subscribe(data => {
           console.log('Weather Cache: Query Status Success:', data);
           this.userSessionData.data = data;
@@ -175,6 +178,7 @@ export class DashboardComponent implements OnInit{
       const contentType = 'image/gif';
       let blob = b64toBlob(base64PlotData, contentType);
       let objectURL = URL.createObjectURL(blob);
+      console.log(objectURL);
       this.file = this.sanitizer.bypassSecurityTrustUrl(objectURL);
       this._snackBar.open('Plot Generation Success',undefined, { duration:1000 });
     },
@@ -187,10 +191,11 @@ export class DashboardComponent implements OnInit{
   sendQuery(userQuery: any): void {
     this._snackBar.open('Query Added in Queue',undefined, { duration:1000 });
     this.weatherService.getWeatherPlot(userQuery).subscribe( blob=> {
-      this.populateUserSession();
+      //this.populateUserSession();
     },
     err => {
-      this.populateUserSession();
+      console.log('sendQuery Error:', err);
+      //this.populateUserSession();
     })
   }
 
@@ -200,7 +205,7 @@ export class DashboardComponent implements OnInit{
   OnRowClick(row: any) {
     console.log(row.radStation);
     if (row.plotStatus == PlotStatus.PROCESS_DONE) {
-      this.plotQueryData({radStation:'KIND', date:'02-04-2022'});
+      this.plotQueryData({ radStation:row.radStation, date:row.date });
       this.currentRadStation = RadStationList.getStationName[row.radStation];
       this.currentRadStationDate = row.date;
     }
