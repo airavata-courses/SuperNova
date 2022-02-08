@@ -17,14 +17,14 @@ router.all('/:apiName/:path', (req, res) => {
             data: req.body
         }).then((response) => {
             console.log('API SUCCESS RESPONSE:'+ formattedPath +':'+ response.data);
-            res.send(response.data)
+            return res.send(response.data);
         },
         (error)=> {
-            console.log('API ERROR RESPONSE:'+ formattedPath +':'+ error.error);
-            res.send(error.error);
+            console.log('API ERROR RESPONSE:'+ formattedPath +':'+ error);
+            return res.sendStatus(404);
         })
     }else {
-        res.send("API Name doesn't exist")
+        return res.send("API Name doesn't exist");
     }
 })
 

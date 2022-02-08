@@ -11,4 +11,4 @@ npm run dev
 docker build -t supernova/weather-radar-gateway-app .
 
 ## Docker Run:
-docker run -d -it -p 4300:4300/tcp supernova/weather-radar-gateway-app:latest
+docker run --net weather-radar-net --name weather-radar-gateway-app -p 4300:4300/tcp supernova/weather-radar-gateway-app:latest
