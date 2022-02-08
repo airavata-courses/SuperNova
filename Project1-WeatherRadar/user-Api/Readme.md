@@ -9,4 +9,4 @@
 docker build -t supernova/user-api-app .
 
 ## Docker Run:
-docker run -d -it -p 4700:4700/tcp supernova/user-api-app:latest
+docker run -d --net weather-radar-net --name user-api-app  -p 4700:4700/tcp supernova/user-api-app:latest
