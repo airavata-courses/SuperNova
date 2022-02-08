@@ -75,7 +75,7 @@ fxFlexFill >
       <!-- RAD STATION Column -->
       <ng-container matColumnDef="radStation">
         <th mat-header-cell *matHeaderCellDef> RAD STATION </th>
-        <td mat-cell *matCellDef="let element"> {{element.radStation}} </td>
+        <td mat-cell *matCellDef="let element"> {{radStationDictionary[element.radStation]}} </td>
       </ng-container>
 
       <!-- DATE Column -->
