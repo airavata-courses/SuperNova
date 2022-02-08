@@ -19,6 +19,6 @@ export class UserService {
 
   postUserQuery(query: any) {
     console.log("postUserQuery:",query);
-    return this.http.post(this.publicApi.gatewayURL+this.publicApi.userQueryEndpoint,query);
+    return this.http.post(this.publicApi.userApiURL+this.publicApi.userQueryEndpoint,query);
   }
 }

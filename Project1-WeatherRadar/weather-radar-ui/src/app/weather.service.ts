@@ -18,6 +18,6 @@ export class WeatherService {
   }
 
   getQueryStatus(data:UserSessionInfo[]) {
-    return this.http.post<UserSessionInfo[]>(this.publicApi.gatewayURL+ this.publicApi.weatherPlotStatus, data);
+    return this.http.post<UserSessionInfo[]>(this.publicApi.weatherCacheURL+ this.publicApi.weatherPlotStatus, data);
   }
 }
