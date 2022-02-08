@@ -11,7 +11,7 @@ import plotting
 
 app = FastAPI()
 
-origins = ["http://localhost:4200"]
+origins = ["*"]
 
 middleware = [Middleware(
     CORSMiddleware,
