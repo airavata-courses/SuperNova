@@ -1,5 +1,5 @@
 class QueryResponse {
-    constructor(radar_id, date, status) {
+    constructor(id,userID,radStation, sessionTime, date, plotStatus) {
         this.id = id
         this.userID = userID
         this.radStation = radStation
