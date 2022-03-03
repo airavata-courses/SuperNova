@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-radar-ui-app
+  labels:
+    app: weather-radar-ui-app
+spec:
+  replicas: 1
+  # Property to wait before diverting traffic, to check if instance didnt crash
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      app: weather-radar-ui-app
+  template:
+    metadata:
+      labels:
+        app: weather-radar-ui-app
+    spec:
+      containers:
+      - name: weather-radar-ui-app
+        image: sdarwant/weather-radar-ui-app:latest
+        ports:
+        - containerPort: 4200
+
