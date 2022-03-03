@@ -27,7 +27,27 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 ## Docker Build:
-docker build -t supernova/weather-radar-ui-app .
+docker build -t sdarwant/weather-radar-ui-app:latest .
 
 ## Docker Run:
-docker run -d --net weather-radar-net --name weather-radar-ui-app -p 4200:4200/tcp supernova/weather-radar-ui-app:latest
+docker run -d --net weather-radar-net --name weather-radar-ui-app -p 4200:4200/tcp sdarwant/weather-radar-ui-app:latest
+
+# Kubernates Commands:
+
+# To Create Deployment:
+kubectl create -f weather-radar-ui-app.deployment.yml --save-config
+
+# To Update Deployment:
+kubectl apply -f weather-radar-ui-app.deployment.yml
+
+# To Delete Deployment:
+kubectl delete -f weather-radar-ui-app.deployment.yml
+
+# To Create Deployment:
+kubectl create -f loadbalancer.service.yml --save-config
+
+# To Delete Deployment:
+kubectl delete -f loadbalancer.service.yml
+
+# Kubernates Get All Details:
+kubectl get all
