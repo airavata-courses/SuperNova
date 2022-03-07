@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-cache-redis
+  labels:
+    app: weather-cache-redis
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      app: weather-cache-redis
+  template:
+    metadata:
+      labels:
+        app: weather-cache-redis
+    spec:
+      containers:
+      - name: weather-cache-redis
+        image: redis
+        ports:
+        - containerPort: 6379
+
