@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {nodejs "NodeJS"} 
-    enviroment {
+    environment {
         REPOSITORY_TAG="sdarwant/weather-radar-ui-app:${BUILD_ID}"
     }
     //For Angular UI app
