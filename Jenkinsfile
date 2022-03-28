@@ -1,6 +1,6 @@
 pipeline {
     agent any
-
+    tools {nodejs "NodeJS"} 
     //For Angular UI app
     stages {
         stage('Build') {
