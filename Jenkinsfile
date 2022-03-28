@@ -28,7 +28,9 @@ pipeline {
                 expression { env.GIT_BRANCH  == 'origin/dev-ui-angular-phase3' }
             }
             steps {
-                sh 'docker image build -t ${REPOSITORY_TAG} .'
+                dir("${env.WORKSPACE}/Project1-WeatherRadar/weather-radar-ui"){
+                    sh 'docker image build -t ${REPOSITORY_TAG} .'
+                }
             }
         }
     }
