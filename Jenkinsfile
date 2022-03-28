@@ -25,7 +25,7 @@ pipeline {
         }
         stage ('Build Image'){
             when {
-                branch 'dev-ui-angular-phase3'
+                branch 'origin/dev-ui-angular-phase3'
             }
             steps {
                 sh 'docker image build -t ${REPOSITORY_TAG} .'
