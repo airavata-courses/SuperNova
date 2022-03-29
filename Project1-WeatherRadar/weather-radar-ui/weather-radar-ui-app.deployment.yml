@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: weather-radar-ui-app
-        image: 10.0.2.1:5000/${REPOSITORY_TAG}
+        image: sdarwant/weather-radar-ui-app:dev
         ports:
         - containerPort: 4200
 
