@@ -6,6 +6,7 @@ metadata:
     app: weather-radar-ui-app
 spec:
   replicas: 1
+  revisionHistoryLimit: 3
   # Property to wait before diverting traffic, to check if instance didnt crash
   minReadySeconds: 10
   selector:
