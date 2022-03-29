@@ -19,6 +19,8 @@ spec:
       containers:
       - name: weather-radar-ui-app
         image: sdarwant/weather-radar-ui-app:dev
+        imagePullPolicy: Always
+        nodePort: 30000
         ports:
         - containerPort: 4200
 
