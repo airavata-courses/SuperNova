@@ -7,6 +7,10 @@ async function run(){
             "clientId": "myapp",
             "brokers" :["http://localhost:9092"]
         })
+        const admin = kafka.admin();
+        console.log("Connecting.....")
+        await admin.connect()
+        console.log("Connected!")
     }
     catch(ex)
     {
