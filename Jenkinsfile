@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "CURRENT BRANCH: $GIT_BRANCH"
+                echo "CURRENT NEW BRANCH: $GIT_BRANCH"
                 // dir("${env.WORKSPACE}/Project1-WeatherRadar/weather-radar-ui"){
                 //     sh(script: """
                 //     npm ci
@@ -24,9 +24,9 @@ pipeline {
             }
         }
         stage ('Build Image'){
-            when {
-                expression { env.GIT_BRANCH  == 'origin/dev-ui-angular-phase3' }
-            }
+            // when {
+            //     expression { env.GIT_BRANCH  == 'origin/dev-ui-angular-phase3' }
+            // }
             steps {
                 dir("${env.WORKSPACE}/Project1-WeatherRadar/weather-radar-ui"){
                     sh 'docker image build -t ${REPOSITORY_TAG} .'
