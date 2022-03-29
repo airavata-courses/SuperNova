@@ -9,13 +9,13 @@ pipeline {
         stage('Build') {
             steps {
                 echo "CURRENT BRANCH: $GIT_BRANCH"
-                dir("${env.WORKSPACE}/Project1-WeatherRadar/weather-radar-ui"){
-                    sh(script: """
-                    npm ci
-                    npm install -g @angular/cli@13.1.4 
-                    ng build
-                    """)
-                }
+                // dir("${env.WORKSPACE}/Project1-WeatherRadar/weather-radar-ui"){
+                //     sh(script: """
+                //     npm ci
+                //     npm install -g @angular/cli@13.1.4 
+                //     ng build
+                //     """)
+                // }
             }
         }
         stage('Test') {
@@ -25,10 +25,12 @@ pipeline {
         }
         stage ('Build Image'){
             when {
-                branch 'dev-ui-angular-phase3'
+                expression { env.GIT_BRANCH  == 'origin/dev-ui-angular-phase3' }
             }
             steps {
-                sh 'docker image build -t ${REPOSITORY_TAG} .'
+                dir("${env.WORKSPACE}/Project1-WeatherRadar/weather-radar-ui"){
+                    sh 'docker image build -t ${REPOSITORY_TAG} .'
+                }
             }
         }
     }
