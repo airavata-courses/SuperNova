@@ -18,7 +18,7 @@ COPY . /app
 EXPOSE 4200
 
 # CMD ["npm","start"]
-CMD ng serve --host 0.0.0.0 ng serve --public-host weatherapp.twilightparadox.com
+CMD ng serve --host 0.0.0.0 --public-host weatherapp.twilightparadox.com
 
 # stage 2: deploy
 # FROM nginx:1.17.1-alpine
