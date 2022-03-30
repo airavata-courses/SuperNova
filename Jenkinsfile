@@ -27,8 +27,8 @@ pipeline {
             steps {
                 echo "BUILD DOCKER IMAGE"
                  dir("${env.WORKSPACE}/Project1-WeatherRadar/weather-cache"){
-                     sh 'docker image build -t sdarwant/sdarwant/weather-cache-app:dev .'
-                     sh 'docker push sdarwant/sdarwant/weather-cache-app:dev'
+                     sh 'docker image build -t sdarwant/weather-cache-app:dev .'
+                     sh 'docker push sdarwant/weather-cache-app:dev'
                 }
             }
         }
