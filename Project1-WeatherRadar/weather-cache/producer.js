@@ -1,4 +1,5 @@
 const {Kafka} = require("kafkajs")
+const msg = process.argv[2];
 
 run();
 async function run(){
@@ -16,6 +17,17 @@ async function run(){
         await producer.connect()
         console.log("Connected!")
 
+        //producer send object with topic and messages having partitions of radar names A-M 0, N-Z 1
+        const partition = msg[0] < "N" ? 0 : 1;
+        const result =  await producer.send({
+            "topic": "Users",
+            "messages": [
+                {
+                    "value": msg,
+                    "partition": partition
+                }
+            ]
+        })
         console.log("Created Successfully!")
         await producer.disconnect();
     }
