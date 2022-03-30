@@ -28,7 +28,7 @@ pipeline {
             }
             steps {
                 echo "BUILD DOCKER IMAGE"
-                 dir("${env.WORKSPACE}/Project1-WeatherRadar/weather-radar-ui"){
+                 dir("${env.WORKSPACE}/Project1-WeatherRadar/user-Api"){
                      sh 'docker image build -t sdarwant/user-api-app:dev .'
                      sh 'docker push sdarwant/user-api-app:dev'
                 }
@@ -40,7 +40,7 @@ pipeline {
             }
             steps {
                  echo "DEPLOY TO K8s"
-                dir("${env.WORKSPACE}/Project1-WeatherRadar/weather-radar-ui"){
+                dir("${env.WORKSPACE}/Project1-WeatherRadar/user-Api"){
                     sh 'sudo microk8s kubectl -n space-dev apply -f user-api-app.deployment.yml'
                     sh 'sudo microk8s kubectl -n space-dev apply -f user-api-app.clusterIP.service.yml'
                     sh 'sudo microk8s kubectl -n space-dev rollout restart deployment user-api-app'
