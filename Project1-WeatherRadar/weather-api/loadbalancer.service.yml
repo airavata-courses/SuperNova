@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
- name: weather-radar-api-app-loadbalancer
+ name: weather-radar-api-app
 spec:
  type: LoadBalancer
  selector:
@@ -10,3 +10,4 @@ spec:
   - name: "4600"
     port: 4600
     targetPort: 4600
+    nodePort: 30002
