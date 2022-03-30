@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+ name: weather-cache-app
+spec:
+ type: LoadBalancer
+ selector:
+    app: weather-cache-app
+ ports:
+  - name: "4400"
+    port: 4400
+    targetPort: 4400
+    nodePort: 30003
