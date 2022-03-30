@@ -41,7 +41,7 @@ pipeline {
                 dir("${env.WORKSPACE}/Project1-WeatherRadar/weather-api"){
                     sh 'sudo microk8s kubectl -n space-dev apply -f weather-radar-api-app.deployment.yml'
                     sh 'sudo microk8s kubectl -n space-dev apply -f loadbalancer.service.yml'
-                    sh 'sudo microk8s kubectl -n space-dev rollout restart deployment user-api-app'
+                    sh 'sudo microk8s kubectl -n space-dev rollout restart deployment weather-radar-api-app'
                 }
             }
         }
