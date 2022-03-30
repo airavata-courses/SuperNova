@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: user-api-app
-        image: sdarwant/user-api-app:latest
+        image: sdarwant/user-api-app:dev
         ports:
         - containerPort: 4700
 
