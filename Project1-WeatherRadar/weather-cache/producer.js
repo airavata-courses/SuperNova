@@ -28,7 +28,7 @@ async function run(){
                 }
             ]
         })
-        console.log("Created Successfully!")
+        console.log(`Send Successfully! ${JSON.stringify(result)}`)
         await producer.disconnect();
     }
     catch(ex)
