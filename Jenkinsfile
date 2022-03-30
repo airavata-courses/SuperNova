@@ -1,5 +1,9 @@
 pipeline {
     agent any
+        tools { 
+        maven 'MAVEN' 
+        jdk 'jdk8' 
+    }
     //For User Api app
     stages {
         stage('Build') {
@@ -7,7 +11,7 @@ pipeline {
                 echo "CURRENT BRANCH ${GIT_BRANCH}"
                 dir("${env.WORKSPACE}/Project1-WeatherRadar/user-Api"){
                     sh(script: """
-                    sed 's/userapi-00/userapi-dev-${BUILD_ID}/g' src/main/resources/application.properties
+                    sed -i 's/userapi-00/userapi-dev-${BUILD_ID}/g' src/main/resources/application.properties
                     mvn clean package -DskipTests
                     """)
                 }
