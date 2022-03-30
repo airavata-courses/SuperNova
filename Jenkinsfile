@@ -9,7 +9,7 @@ pipeline {
                 echo "CURRENT BRANCH ${GIT_BRANCH}"
                 dir("${env.WORKSPACE}/Project1-WeatherRadar/weather-cache"){
                     sh(script: """
-                    sed -i 's/weather-cache-00/weather-cache-${BUILD_ID}/' index.js
+                    sed -i 's/weather-cache-00/weather-cache-dev-${BUILD_ID}/' index.js
                     npm ci
                     """)
                 }
