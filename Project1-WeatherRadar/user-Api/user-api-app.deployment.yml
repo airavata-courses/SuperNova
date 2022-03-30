@@ -6,6 +6,7 @@ metadata:
     app: user-api-app
 spec:
   replicas: 1
+  revisionHistoryLimit: 3
   # Property to wait before diverting traffic, to check if instance didnt crash
   minReadySeconds: 10
   selector:
@@ -18,7 +19,8 @@ spec:
     spec:
       containers:
       - name: user-api-app
-        image: sdarwant/user-api-app:latest
+        image: sdarwant/user-api-app:dev
+        imagePullPolicy: Always
         ports:
         - containerPort: 4700
 
