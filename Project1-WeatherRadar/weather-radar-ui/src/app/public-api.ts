@@ -8,7 +8,7 @@ export class PublicApi {
   weatherApiURL ='http://weather-radar-api-app:4600';
   weatherCacheURL = 'http://localhost:4400';
   //weatherCacheURL = 'http://weather-cache-app:4400';
-  userApiURL = 'http://localhost:4700';
+  userApiURL = 'http://weatherapp.twilightparadox.com:30001';
 
 
   // weather service
