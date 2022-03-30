@@ -44,7 +44,12 @@ async def read_root(radar_id, date):
     else:
         raise HTTPException(status_code=404, detail="Item not found")
 
-
+@app.get("/weatherApi/buildinfo")
+async def read_buildinfo():
+    return 'weather-api-00'
+    
+    
+    
 def setup():
     print('welcome to weather radar api')
     uvicorn.run(app, host="0.0.0.0", port=4600)
