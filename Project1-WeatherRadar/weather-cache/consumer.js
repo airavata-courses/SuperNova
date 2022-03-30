@@ -15,6 +15,12 @@ async function run(){
         console.log("Connecting.....")
         await consumer.connect()
         console.log("Connected!")
+
+        //Subscribing to topics
+        await consumer.subscribe({
+            "topic": "Users",
+            "fromBeginning": true
+        })        
     }
     catch(ex)
     {
