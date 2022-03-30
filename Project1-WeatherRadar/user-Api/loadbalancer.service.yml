@@ -10,3 +10,4 @@ spec:
   - name: "4700"
     port: 4700
     targetPort: 4700
+    nodePort: 30001
