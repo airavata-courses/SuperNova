@@ -6,6 +6,7 @@ metadata:
     app: weather-radar-gateway-app
 spec:
   replicas: 1
+  revisionHistoryLimit: 3
   # Property to wait before diverting traffic, to check if instance didnt crash
   minReadySeconds: 10
   selector:
@@ -18,11 +19,9 @@ spec:
     spec:
       containers:
       - name: weather-radar-gateway-app
-        image: sdarwant/weather-radar-gateway-app:latest
+        image: sdarwant/weather-radar-gateway-app:dev
+        imagePullPolicy: Always
         ports:
         - containerPort: 4300
-        resources:
-          limits:
-            cpu: "700m"
 
 

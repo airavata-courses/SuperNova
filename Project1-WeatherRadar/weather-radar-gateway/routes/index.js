@@ -42,4 +42,9 @@ router.post('/register', (req, res) => {
     })
 })
 
+router.get('/gateway/buildinfo', (req, res) => {
+    return res.send('gateway-00');
+})
+
+
 module.exports = router
