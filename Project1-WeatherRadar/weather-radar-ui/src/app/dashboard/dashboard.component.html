@@ -31,9 +31,20 @@ fxFlexFill >
       <mat-card-content class="card-content">
         <section>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)"  class="form">
+          <mat-form-field appearance="fill">
+            <mat-label>Data Type</mat-label>
+            <mat-select formControlName="dataType">
+              <div  *ngFor="let dataType of dataTypes">
+              <mat-option value="{{dataType}}"> {{dataType}} </mat-option>
+              </div>
+            </mat-select>
+            <mat-error *ngIf="this.formGroup.hasError('required')">
+              Data Type is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
           <!-- Rad Station input -->
           <mat-form-field appearance="fill">
-            <mat-label>Select</mat-label>
+            <mat-label>Area</mat-label>
             <mat-select formControlName="radStation">
               <div  *ngFor="let radStationData of radStationList">
               <mat-option value="{{radStationData.value}}"> {{radStationData.name}} </mat-option>
@@ -72,6 +83,12 @@ fxFlexFill >
   <div fxFlex="20" class="sec-right" fxFlex.xs="15">
     <!-- Table -->
     <table mat-table [dataSource]="userSessionData" class="mat-elevation-z8 demo-table" >
+
+      <!-- RAD STATION Column -->
+      <ng-container matColumnDef="dataType">
+        <th mat-header-cell *matHeaderCellDef> DATA TYPE </th>
+        <td mat-cell *matCellDef="let element"> {{element.dataType}} </td>
+      </ng-container>
       <!-- RAD STATION Column -->
       <ng-container matColumnDef="radStation">
         <th mat-header-cell *matHeaderCellDef> RAD STATION </th>

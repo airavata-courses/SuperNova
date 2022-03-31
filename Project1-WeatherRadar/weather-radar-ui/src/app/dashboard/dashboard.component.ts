@@ -103,7 +103,7 @@ export class DashboardComponent implements OnInit{
 
 
   // User session data table
-  displayedColumns: string[] = ['radStation', 'date', 'plotStatus'];
+  displayedColumns: string[] = ['dataType','radStation', 'date', 'plotStatus'];
   userSessionData = new MatTableDataSource<UserSessionInfo>();
 
   // user input data
@@ -112,6 +112,7 @@ export class DashboardComponent implements OnInit{
 
   createForm() {
     this.formGroup = this.formBuilder.group({
+      dataType: new FormControl('', [Validators.required]),
       radStation: new FormControl('', [Validators.required]),
       date: new FormControl('', [Validators.required]),
       emailAddress:this.user.email,
@@ -146,6 +147,7 @@ export class DashboardComponent implements OnInit{
   onSubmit(query: any) {
 
     const userQuery:UserQuery = {
+      dataType: query.dataType,
       radStation: query.radStation,
       date: new dateFormatPipe().transform(query.date),
       emailAddress: this.user.email
@@ -209,6 +211,9 @@ export class DashboardComponent implements OnInit{
       this.currentRadStationDate = row.date;
     }
   }
+
+
+  dataTypes = ['NexRAD', 'Merra-2'];
 
 }
 
