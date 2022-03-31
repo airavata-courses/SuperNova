@@ -19,7 +19,10 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo 'TEST SKIPPED FOR NOW'
+                echo 'Running Test Cases'
+                dir("${env.WORKSPACE}/Project1-WeatherRadar/weather-radar-ui"){
+                    sh 'npm test'
+                }
             }
         }
         stage ('Build & Push Docker Image'){
