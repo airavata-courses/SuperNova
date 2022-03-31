@@ -1,35 +1,18 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Shallow } from 'shallow-render';
 import { AppComponent } from './app.component';
+import { AppModule } from './app.module';
 
-describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
+describe('App Component', () => {
+  let shallow: Shallow<AppComponent>;
+
+  beforeEach(() => {
+    shallow = new Shallow(AppComponent, AppModule)
+    .replaceModule(BrowserAnimationsModule, NoopAnimationsModule);
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'weather-radar-ui'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('weather-radar-ui');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('weather-radar-ui app is running!');
+  it('creates', async () => {
+    const { instance } = await shallow.render();
+    expect(instance).toBeDefined();
   });
 });
