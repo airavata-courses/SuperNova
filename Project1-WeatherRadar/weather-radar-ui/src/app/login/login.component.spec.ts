@@ -1,25 +1,18 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Shallow } from 'shallow-render';
+import { AppModule } from '../app.module';
 import { LoginComponent } from './login.component';
 
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ LoginComponent ]
-    })
-    .compileComponents();
-  });
+describe('Login Component', () => {
+  let shallow: Shallow<LoginComponent>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    shallow = new Shallow(LoginComponent, AppModule)
+    .replaceModule(BrowserAnimationsModule, NoopAnimationsModule);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('creates', async () => {
+    const { instance } = await shallow.render();
+    expect(instance).toBeDefined();
   });
 });

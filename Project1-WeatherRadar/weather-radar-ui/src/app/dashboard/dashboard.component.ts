@@ -67,10 +67,8 @@ export class DashboardComponent implements OnInit{
     this.login();
     this.createForm();
     this.getRadStation();
-    setInterval(()=> {
-      this.populateUserSession();
-    }, 5000);
     this.populateUserSession();
+    this.maxDate.setDate(this.maxDate.getDate() - 1);
   }
 
 
@@ -111,6 +109,7 @@ export class DashboardComponent implements OnInit{
   // user input data
   formGroup!: FormGroup;
   maxDate = new Date();
+
   createForm() {
     this.formGroup = this.formBuilder.group({
       radStation: new FormControl('', [Validators.required]),
