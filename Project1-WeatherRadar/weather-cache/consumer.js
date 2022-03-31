@@ -20,6 +20,13 @@ async function run(){
         await consumer.subscribe({
             "topic": "Users",
             "fromBeginning": true
+        })
+        
+        //consumer run logic to receive messages
+        await consumer.run({
+            "eachMessage": async result => {
+                console.log(`RVD Msg ${result.message.value} on partition ${result.partition}`)
+            }
         })        
     }
     catch(ex)
