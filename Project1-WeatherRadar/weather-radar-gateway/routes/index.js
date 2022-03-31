@@ -42,7 +42,7 @@ router.post('/register', (req, res) => {
     })
 })
 
-router.get('/gateway/buildinfo', (req, res) => {
+router.get('/gatewaybuildinfo', (req, res) => {
     return res.send('gateway-00');
 })
 
