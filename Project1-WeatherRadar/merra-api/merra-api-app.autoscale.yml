@@ -1,12 +1,12 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: weather-radar-api-app-autoscale
+  name: merra-api-app-autoscale
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: weather-radar-api-app
+    name: merra-api-app
   minReplicas: 1
   maxReplicas: 3
   targetCPUUtilizationPercentage: 70
