@@ -52,7 +52,7 @@ async def read_buildinfo():
     
 def setup():
     print('welcome to weather radar api')
-    uvicorn.run(app, host="0.0.0.0", port=7400)
+    uvicorn.run(app, host="0.0.0.0", port=4600)
 
 
 
