@@ -28,7 +28,7 @@ pipeline {
                 echo "BUILD DOCKER IMAGE"
                  dir("${env.WORKSPACE}/Project1-WeatherRadar/merra-api"){
                      sh 'docker image build -t sdarwant/merra-api-app:dev .'
-                     sh 'docker push sdarwant/weather-radar-api-app:dev'
+                     sh 'docker push sdarwant/merra-api-app:dev'
                 }
             }
         }
