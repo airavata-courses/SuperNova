@@ -1,14 +1,14 @@
 from starlette.requests import Request
 from starlette.responses import Response
 
-import weatherApi as weatherApi
 from fastapi import FastAPI, HTTPException
 import uvicorn
 from fastapi.responses import FileResponse
 from fastapi.middleware import Middleware
 from fastapi.middleware.cors import CORSMiddleware
 import plotting
-
+import kafka_msg_handler
+import multiprocessing
 app = FastAPI()
 
 origins = ["*"]
@@ -52,12 +52,16 @@ async def read_buildinfo():
     
 def setup():
     print('welcome to weather radar api')
-    uvicorn.run(app, host="0.0.0.0", port=4600)
+    uvicorn.run(app, host="0.0.0.0", port=7400)
 
 
 
 if __name__ == '__main__':
-    weatherApi.setup()
+    p1 = multiprocessing.Process(target=setup, args=())
+    p2 = multiprocessing.Process(target=kafka_msg_handler.nexrad_msg_consumer, args=())
+    p1.start()
+    p2.start()
+
 
 ## Run via docker
 
