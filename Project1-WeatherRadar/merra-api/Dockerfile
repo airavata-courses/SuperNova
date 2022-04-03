@@ -16,4 +16,4 @@ RUN pip3 install arm-pyart
 ENV run_env=$run_env
 
 
-CMD python weatherApi.py  --pythonpath .
+CMD python merraApi.py  --pythonpath .

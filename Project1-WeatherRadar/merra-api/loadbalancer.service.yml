@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
- name: weather-radar-api-app-loadbalancer
+ name: merra-api-app
 spec:
  type: LoadBalancer
  selector:
-    app: weather-radar-api-app
+    app: merra-api-app
  ports:
-  - name: "4600"
-    port: 4600
-    targetPort: 4600
+  - name: "4800"
+    port: 4800
+    targetPort: 4800
+    nodePort: 30006

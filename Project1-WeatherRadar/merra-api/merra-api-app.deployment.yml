@@ -1,24 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: weather-radar-api-app
+  name: merra-api-app
   labels:
-    app: weather-radar-api-app
+    app: merra-api-app
 spec:
   replicas: 1
-  # Property to wait before diverting traffic, to check if instance didnt crash
+  revisionHistoryLimit: 3
   minReadySeconds: 10
   selector:
     matchLabels:
-      app: weather-radar-api-app
+      app: merra-api-app
   template:
     metadata:
       labels:
-        app: weather-radar-api-app
+        app: merra-api-app
     spec:
       containers:
-      - name: weather-radar-api-app
-        image: sdarwant/weather-radar-api-app:latest
+      - name: merra-api-app
+        image: sdarwant/merra-api-app:dev
+        imagePullPolicy: Always
         ports:
-        - containerPort: 4600
+        - containerPort: 4800
 
