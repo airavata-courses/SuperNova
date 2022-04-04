@@ -83,6 +83,9 @@ function cache(req, res, next) {
 // Weather data plot API 
 app.get('/weatherApi/plot', cache, getPlot);
 
+// Merra-2 API for weather data plot  
+app.get('/merraApi/plot', cache, getPlot);
+
 // Query Status API to show on dashboard
 app.post('/weatherApi/querystatus', function(req, res){
     console.log("query status endpoint CONNECT");
