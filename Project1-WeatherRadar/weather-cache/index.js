@@ -16,10 +16,15 @@ app.use(cors());
 const PORT = process.env.PORT || 4400;
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
 
-const client = redis.createClient({ host:"weather-cache-redis", port:6379 });
-//const client = redis.createClient(REDIS_PORT);
+//const client = redis.createClient({ host:"weather-cache-redis", port:6379 });
+const client = redis.createClient(REDIS_PORT);
+client.on("error", function (err) {
+    console.log("ERR:REDIS: " + err);
+});
+
 app.disable('etag');
 app.use(express.json());
+
 
 function getPlot(req, res, next) {
     console.log('kafka getPlot backend call..');
@@ -68,16 +73,24 @@ async function RestGetPlot(req, res, next) {
 function cache(req, res, next) {
     console.log("Cache:",req.params.apiName)
     //weatherApiUrl = 'http://localhost:4600'
-    weatherApiUrl='http://weather-radar-api-app:4600';
-    formattedPath = weatherApiUrl + req.originalUrl;
+    if (req.params.apiName = 'weatherApi') {
+        //ApiUrl='http://weather-radar-api-app:4600';
+        ApiUrl='localhost:4600';
+    } else if (req.params.apiName = 'merraApi') {
+        //ApiUrl='http://weather-radar-api-app:4600';
+        ApiUrl='localhost:4800';
+    }
+    
+    formattedPath = ApiUrl + req.originalUrl;
     console.log('Path Routed:'+ formattedPath)
     current_url = new URL(formattedPath);
     search_params = current_url.searchParams;
     console.log('parameters: ' + search_params)
+    dataType = search_params.get('data_type'); 
     radar_id = search_params.get('radar_id');
     date = search_params.get('date');
     /* route to redis cache */
-    client.get(radar_id+date, (err, data) => {
+    client.get(dataType+radar_id+date, (err, data) => {
         if (err) {
             console.log("Error: ", err)
         }
@@ -92,7 +105,7 @@ function cache(req, res, next) {
     });
 }
 
-// Weather data plot API 
+// NexRAD API for weather data plot  
 app.get('/weatherApi/plot', cache, getPlot);
 
 // Merra-2 API for weather data plot  
@@ -109,7 +122,7 @@ app.post('/weatherApi/querystatus', function(req, res){
     result = []
     for (let i = 0; i < jsonObj.length; i++){
         let obj = jsonObj[i];
-        let redis_key = obj.radStation + obj.date + "status";
+        let redis_key = obj.dataType + obj.radStation + obj.date + "status";
         console.log(redis_key)
         client.get(redis_key, (err, data) => {
             if (err) {
@@ -125,6 +138,7 @@ app.post('/weatherApi/querystatus', function(req, res){
                     obj.radStation,
                     obj.sessionTime,
                     obj.date,
+                    obj.dataType,
                     'PROCESS_DONE'
                 );
                 console.log("element added in JSON: " + output);
@@ -137,6 +151,7 @@ app.post('/weatherApi/querystatus', function(req, res){
                     obj.radStation,
                     obj.sessionTime,
                     obj.date,
+                    obj.dataType,
                     'PROCESS_IN'
                 );
                 console.log("element added in JSON: " + output);
@@ -149,6 +164,7 @@ app.post('/weatherApi/querystatus', function(req, res){
                     obj.radStation,
                     obj.sessionTime,
                     obj.date,
+                    obj.dataType,
                     'PROCESS_FAIL'
                 );
                 console.log("element added in JSON: " + output);
@@ -167,3 +183,4 @@ app.listen(PORT, () => {
     runConsumerNexRAD.kafkaCacheConsumerNexRAD();//NexRAD consumer continously listening from Kafka Broker
     runConsumerMerra.kafkaCacheConsumerMerra();//Merra-2 consumer continously listening from Kafka Broker
 });
+
