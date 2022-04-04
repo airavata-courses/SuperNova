@@ -9,13 +9,14 @@ import nexradaws
 import pyart
 import pytz
 from PIL import Image
-from starlette.responses import FileResponse
 import base64
 matplotlib.use('Agg')
 
 def plot_reflectivity(radar_id, month, day, year):
     try:
-        plot_path = './output/{0}-{1}-{2}-{3}.gif'.format(radar_id, year, month, day)
+        # Connecting this for testing and adding static image path.
+        plot_path = './output/iron-man-fly.gif'
+        # plot_path = './output/{0}-{1}-{2}-{3}.gif'.format(radar_id, year, month, day)
         if not exists(plot_path):
             templocation = tempfile.mkdtemp()
             conn = nexradaws.NexradAwsInterface()
@@ -23,7 +24,7 @@ def plot_reflectivity(radar_id, month, day, year):
             start = central_timezone.localize(datetime(year, month, day, 17, 0))
             end = central_timezone.localize(datetime(year, month, day, 19, 0))
             scans = conn.get_avail_scans_in_range(start, end, radar_id)
-            print("There are {} scans available between {} and {}\n".format(len(scans), start, end))
+            print("Meera Api:plot_reflectivity - There are {} scans available between {} and {}\n".format(len(scans), start, end))
 
             max_scan = 5 if len(scans) >= 5 else len(scans)
             results = conn.download(scans[0: max_scan], templocation)
@@ -52,10 +53,10 @@ def plot_reflectivity(radar_id, month, day, year):
                            duration=400, loop=0)
 
         if exists(plot_path):
-            print('Safety Net: Plot exists')
+            print('Meera Api:plot_reflectivity - Safety Net: Plot exists')
         with open(plot_path, "rb") as image_file:
             base64PlotData = base64.b64encode(image_file.read())
         return base64PlotData
     except Exception as e:
-        print("Exception: plot_reflectivity:", e)
+        print("Meera Api:plot_reflectivity - Exception:", e)
     return None
