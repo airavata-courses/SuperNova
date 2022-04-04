@@ -21,10 +21,22 @@ const client = redis.createClient({ host:"weather-cache-redis", port:6379 });
 app.disable('etag');
 app.use(express.json());
 
-async function getPlot(req, res, next) {
+function getPlot(req, res, next) {
+    console.log('kafka getPlot backend call..');
+    client.set(dataType+radar_id+date+'status', 'PROCESS_IN'); // weather plot status
+    kafkaProducerSuccess = runProducer.kafkaCacheProducer(dataType, JSON.stringify({"data_type":dataType,"radar_id":radar_id,"date":date}));
+    if (kafkaProducerSuccess = true) {
+        return res.sendStatus(200);
+    } else {
+        RestGetPlot(req, res, next);
+    } 
+}
+
+
+async function RestGetPlot(req, res, next) {
     try {
         console.log('getPlot backend call..');
-        client.set(radar_id+date+'status', 'PROCESS_IN'); // weather plot status
+        client.set(dataType+radar_id+date+'status', 'PROCESS_IN'); // weather plot status
         await axios({
             method: req.method,
             url: formattedPath,
@@ -33,24 +45,24 @@ async function getPlot(req, res, next) {
         }).then((response) => {
             console.log('API SUCCESS RESPONSE:'+ formattedPath +':'+response.data);
             // Set data to Redis
-            client.set(radar_id+date, JSON.stringify(response.data)); // weather plot data
+            client.set(dataType+radar_id+date, JSON.stringify(response.data)); // weather plot data
             setTimeout(()=>{
                 console.log('timeout update');
-                client.set(radar_id+date+'status', 'PROCESS_DONE'); // weather plot status
+                client.set(dataType+radar_id+date+'status', 'PROCESS_DONE'); // weather plot status
             }, 3000);
             console.log('Fetching Data...');
             return res.send(response.data);
         },
         (error)=> {
             console.log('API ERROR RESPONSE:'+ formattedPath +':'+ error.error);
-            client.set(radar_id+date+'status', 'PROCESS_FAIL'); // weather plot status
+            client.set(dataType+radar_id+date+'status', 'PROCESS_FAIL'); // weather plot status
             return res.send(error);
         })
     } catch (err) {
-      console.error(err);
-      return res.status(500);
+    console.error(err);
+    return res.status(500);
     }
-}
+}   
 
 // Cache middleware
 function cache(req, res, next) {
