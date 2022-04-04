@@ -5,6 +5,9 @@ const cors = require('cors');
 const url = require('url');
 const QueryResponse = require('./query');
 const isEmpty = require('lodash.isempty');
+const runProducer = require('./producer');
+const runConsumerNexRAD = require('./consumer-nexrad');
+const runConsumerMerra = require('./consumer-merra');
 
 const app = express();
 
@@ -146,5 +149,6 @@ app.post('/weatherApi/querystatus', function(req, res){
 
 app.listen(PORT, () => {
     console.log(`Cache service listening on port ${PORT}`)
+    runConsumerNexRAD.kafkaCacheConsumerNexRAD();//NexRAD consumer continously listening from Kafka Broker
+    runConsumerMerra.kafkaCacheConsumerMerra();//Merra-2 consumer continously listening from Kafka Broker
 });
-
