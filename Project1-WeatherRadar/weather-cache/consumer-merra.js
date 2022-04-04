@@ -21,9 +21,9 @@ async function kafkaCacheConsumerMerra(){
 
         //creating the consumer
         const consumer = kafka.consumer({groupId: 'merra_outgoing_group'})
-        console.log("Connecting.....")
+        console.log("Consumer Merra Connecting.....")
         await consumer.connect()
-        console.log("Connected!")
+        console.log("Consumer Merra Connected!")
 
         //Subscribing to topics
         await consumer.subscribe({
@@ -59,15 +59,17 @@ async function kafkaCacheConsumerMerra(){
                     console.log('Merra consumer unable to handle incoming message', e)
                 }
             },
-        })   
+        })
         
     }
     catch(ex)
     {
-        console.error(`Something bad happened ${ex}`)
+        console.error(`kafka Merra consumer exception ${ex}`)
     }
     finally{
 
     }
 
 }
+
+module.exports = { kafkaCacheConsumerMerra }
