@@ -74,11 +74,11 @@ function cache(req, res, next) {
     console.log("Cache:",req.params.apiName)
     //weatherApiUrl = 'http://localhost:4600'
     if (req.params.apiName = 'weatherApi') {
-        //ApiUrl='http://weather-radar-api-app:4600';
-        ApiUrl='localhost:4600';
+        ApiUrl='http://weather-radar-api-app:4600';
+        //ApiUrl='localhost:4600';
     } else if (req.params.apiName = 'merraApi') {
-        //ApiUrl='http://weather-radar-api-app:4600';
-        ApiUrl='localhost:4800';
+        ApiUrl='http://merra-api-app:4800';
+        //ApiUrl='localhost:4800';
     }
     
     formattedPath = ApiUrl + req.originalUrl;
