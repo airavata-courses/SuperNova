@@ -5,6 +5,9 @@ const cors = require('cors');
 const url = require('url');
 const QueryResponse = require('./query');
 const isEmpty = require('lodash.isempty');
+const runProducer = require('./producer');
+const runConsumerNexRAD = require('./consumer-nexrad');
+const runConsumerMerra = require('./consumer-merra');
 
 const app = express();
 
@@ -13,15 +16,32 @@ app.use(cors());
 const PORT = process.env.PORT || 4400;
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
 
-const client = redis.createClient({ host:"weather-cache-redis", port:6379 });
-//const client = redis.createClient(REDIS_PORT);
+//const client = redis.createClient({ host:"weather-cache-redis", port:6379 });
+const client = redis.createClient(REDIS_PORT);
+client.on("error", function (err) {
+    console.log("ERR:REDIS: " + err);
+});
+
 app.disable('etag');
 app.use(express.json());
 
-async function getPlot(req, res, next) {
+
+function getPlot(req, res, next) {
+    console.log('kafka getPlot backend call..');
+    client.set(dataType+radar_id+date+'status', 'PROCESS_IN'); // weather plot status
+    kafkaProducerSuccess = runProducer.kafkaCacheProducer(dataType, JSON.stringify({"data_type":dataType,"radar_id":radar_id,"date":date}));
+    if (kafkaProducerSuccess = true) {
+        return res.sendStatus(200);
+    } else {
+        RestGetPlot(req, res, next);
+    } 
+}
+
+
+async function RestGetPlot(req, res, next) {
     try {
         console.log('getPlot backend call..');
-        client.set(radar_id+date+'status', 'PROCESS_IN'); // weather plot status
+        client.set(dataType+radar_id+date+'status', 'PROCESS_IN'); // weather plot status
         await axios({
             method: req.method,
             url: formattedPath,
@@ -30,39 +50,47 @@ async function getPlot(req, res, next) {
         }).then((response) => {
             console.log('API SUCCESS RESPONSE:'+ formattedPath +':'+response.data);
             // Set data to Redis
-            client.set(radar_id+date, JSON.stringify(response.data)); // weather plot data
+            client.set(dataType+radar_id+date, JSON.stringify(response.data)); // weather plot data
             setTimeout(()=>{
                 console.log('timeout update');
-                client.set(radar_id+date+'status', 'PROCESS_DONE'); // weather plot status
+                client.set(dataType+radar_id+date+'status', 'PROCESS_DONE'); // weather plot status
             }, 3000);
             console.log('Fetching Data...');
             return res.send(response.data);
         },
         (error)=> {
             console.log('API ERROR RESPONSE:'+ formattedPath +':'+ error.error);
-            client.set(radar_id+date+'status', 'PROCESS_FAIL'); // weather plot status
+            client.set(dataType+radar_id+date+'status', 'PROCESS_FAIL'); // weather plot status
             return res.send(error);
         })
     } catch (err) {
-      console.error(err);
-      return res.status(500);
+    console.error(err);
+    return res.status(500);
     }
-}
+}   
 
 // Cache middleware
 function cache(req, res, next) {
     console.log("Cache:",req.params.apiName)
     //weatherApiUrl = 'http://localhost:4600'
-    weatherApiUrl='http://weather-radar-api-app:4600';
-    formattedPath = weatherApiUrl + req.originalUrl;
+    if (req.params.apiName = 'weatherApi') {
+        //ApiUrl='http://weather-radar-api-app:4600';
+        ApiUrl='localhost:4600';
+    } else if (req.params.apiName = 'merraApi') {
+        //ApiUrl='http://weather-radar-api-app:4600';
+        ApiUrl='localhost:4800';
+    }
+    
+    formattedPath = ApiUrl + req.originalUrl;
     console.log('Path Routed:'+ formattedPath)
     current_url = new URL(formattedPath);
     search_params = current_url.searchParams;
     console.log('parameters: ' + search_params)
+    dataType = search_params.get('data_type'); 
     radar_id = search_params.get('radar_id');
     date = search_params.get('date');
     /* route to redis cache */
-    client.get(radar_id+date, (err, data) => {
+    client.get(dataType+radar_id+date, (err, data) => {
         if (err) {
             console.log("Error: ", err)
         }
@@ -77,8 +105,11 @@ function cache(req, res, next) {
     });
 }
 
-// Weather data plot API 
+// NexRAD API for weather data plot  
 app.get('/weatherApi/plot', cache, getPlot);
+
+// Merra-2 API for weather data plot  
+app.get('/merraApi/plot', cache, getPlot);
 
 // Weather Cache Build Info
 app.get('/weatherCache/buildinfo', function(req, res){
@@ -96,7 +127,7 @@ app.post('/weatherApi/querystatus', function(req, res){
     result = []
     for (let i = 0; i < jsonObj.length; i++){
         let obj = jsonObj[i];
-        let redis_key = obj.radStation + obj.date + "status";
+        let redis_key = obj.dataType + obj.radStation + obj.date + "status";
         console.log(redis_key)
         client.get(redis_key, (err, data) => {
             if (err) {
@@ -112,6 +143,7 @@ app.post('/weatherApi/querystatus', function(req, res){
                     obj.radStation,
                     obj.sessionTime,
                     obj.date,
+                    obj.dataType,
                     'PROCESS_DONE'
                 );
                 console.log("element added in JSON: " + output);
@@ -124,6 +156,7 @@ app.post('/weatherApi/querystatus', function(req, res){
                     obj.radStation,
                     obj.sessionTime,
                     obj.date,
+                    obj.dataType,
                     'PROCESS_IN'
                 );
                 console.log("element added in JSON: " + output);
@@ -136,6 +169,7 @@ app.post('/weatherApi/querystatus', function(req, res){
                     obj.radStation,
                     obj.sessionTime,
                     obj.date,
+                    obj.dataType,
                     'PROCESS_FAIL'
                 );
                 console.log("element added in JSON: " + output);
@@ -151,5 +185,7 @@ app.post('/weatherApi/querystatus', function(req, res){
 
 app.listen(PORT, () => {
     console.log(`Cache service listening on port ${PORT}`)
+    runConsumerNexRAD.kafkaCacheConsumerNexRAD();//NexRAD consumer continously listening from Kafka Broker
+    runConsumerMerra.kafkaCacheConsumerMerra();//Merra-2 consumer continously listening from Kafka Broker
 });
 

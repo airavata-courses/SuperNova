@@ -1,43 +1,48 @@
 const {Kafka} = require("kafkajs")
-const msg = process.argv[2];
 
-run();
-async function run(){
+async function kafkaCacheProducer(dataType, msg){
     try
     {
         //kafka client connection
         const kafka = new Kafka({
-            "clientId": "myapp",
-            "brokers" :["localhost:9092"]
+            "clientId": "weatherCacheClient",
+            "brokers" :["kafka-0.kafka-headless.space-dev.svc.cluster.local:9092"]
         })
 
         //producer interface
         const producer = kafka.producer();
-        console.log("Connecting.....")
+        console.log("Producer Cache Connecting.....")
         await producer.connect()
-        console.log("Connected!")
+        console.log("Producer Cache Connected!")
 
         //producer send object with topic and messages having partitions of radar names A-M 0, N-Z 1
-        const partition = msg[0] < "N" ? 0 : 1;
+        if (dataType = 'NexRAD') {
+            topic = 'nexrad_incoming'
+        } else if (dataType = 'Merra-2') {
+            topic = 'merra_incoming'
+        }
+
+        //producer send object with topic and messages
         const result =  await producer.send({
-            "topic": "Users",
+            "topic": topic,
             "messages": [
                 {
-                    "value": msg,
-                    "partition": partition
+                    "value": msg
                 }
             ]
         })
-        console.log(`Send Successfully! ${JSON.stringify(result)}`)
+        console.log(`Producer Cache request Send Successfully! ${JSON.stringify(result)}`)
         await producer.disconnect();
+        return true
     }
     catch(ex)
     {
-        console.error(`Something bad happened ${ex}`)
+        console.error(`Producer Cache: Something bad happened ${ex}`)
+        return false
     }
     finally{
-        process.exit(0);
+        //process.exit(0);
     }
+};
 
-
-}
+module.exports = { kafkaCacheProducer }
