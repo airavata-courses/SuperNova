@@ -12,14 +12,14 @@ async function kafkaCacheConsumerNexRAD(){
         })
 
         //creating the consumer
-        const consumer = kafka.consumer({groupId: 'test'})
+        const consumer = kafka.consumer({groupId: 'nexrad_outgoing_group'})
         console.log("Connecting.....")
         await consumer.connect()
         console.log("Connected!")
 
         //Subscribing to topics
         await consumer.subscribe({
-            "topic": "nexrad",
+            "topic": "nexrad_outgoing",
             "fromBeginning": true
         })
         
