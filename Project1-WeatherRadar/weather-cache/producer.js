@@ -1,4 +1,4 @@
-const {Kafka} = require("kafkajs")
+const {Kafka} = require("kafkajs");
 
 async function kafkaCacheProducer(dataType, msg){
     try
@@ -11,9 +11,9 @@ async function kafkaCacheProducer(dataType, msg){
 
         //producer interface
         const producer = kafka.producer();
-        console.log("Producer Cache Connecting.....")
+        console.log("Weather Cache Producer Connecting.....")
         await producer.connect()
-        console.log("Producer Cache Connected!")
+        console.log("Weather Cache Producer Connected!")
 
         //producer send object with topic and messages having partitions of radar names A-M 0, N-Z 1
         if (dataType = 'NexRAD') {
@@ -31,13 +31,13 @@ async function kafkaCacheProducer(dataType, msg){
                 }
             ]
         })
-        console.log(`Producer Cache request Send Successfully! ${JSON.stringify(result)}`)
+        console.log(`Weather Cache Producer request Send Successfully! ${JSON.stringify(result)}`)
         await producer.disconnect();
         return true
     }
     catch(ex)
     {
-        console.error(`Producer Cache: Something bad happened ${ex}`)
+        console.error(`Weather Cache Producer: Something bad happened ${ex}`)
         return false
     }
     finally{
