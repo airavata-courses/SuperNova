@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import plotting
 import kafka_msg_handler
 import multiprocessing
+
 app = FastAPI()
 
 origins = ["*"]
@@ -44,16 +45,15 @@ async def read_root(radar_id, date):
     else:
         raise HTTPException(status_code=404, detail="Item not found")
 
+
 @app.get("/weatherApi/buildinfo")
 async def read_buildinfo():
     return 'weather-api-00'
-    
-    
-    
+
+
 def setup():
     print('welcome to weather radar api')
     uvicorn.run(app, host="0.0.0.0", port=4600)
-
 
 
 if __name__ == '__main__':
@@ -61,7 +61,6 @@ if __name__ == '__main__':
     p2 = multiprocessing.Process(target=kafka_msg_handler.nexrad_msg_consumer, args=())
     p1.start()
     p2.start()
-
 
 ## Run via docker
 
