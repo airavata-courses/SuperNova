@@ -16,8 +16,8 @@ app.use(cors());
 const PORT = process.env.PORT || 4400;
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
 
-//const client = redis.createClient({ host:"weather-cache-redis", port:6379 });
-const client = redis.createClient(REDIS_PORT);
+const client = redis.createClient({ host:"weather-cache-redis", port:6379 });
+//const client = redis.createClient(REDIS_PORT);
 client.on("error", function (err) {
     console.log("ERR:REDIS: " + err);
 });
