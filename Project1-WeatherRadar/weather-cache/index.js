@@ -16,8 +16,8 @@ app.use(cors());
 const PORT = process.env.PORT || 4400;
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
 
-//const client = redis.createClient({ host:"weather-cache-redis", port:6379 });
-const client = redis.createClient(REDIS_PORT);
+const client = redis.createClient({ host:"weather-cache-redis", port:6379 });
+//const client = redis.createClient(REDIS_PORT);
 client.on("error", function (err) {
     console.log("ERR:REDIS: " + err);
 });
@@ -74,11 +74,11 @@ function cache(req, res, next) {
     console.log("Cache:",req.params.apiName)
     //weatherApiUrl = 'http://localhost:4600'
     if (req.params.apiName = 'weatherApi') {
-        //ApiUrl='http://weather-radar-api-app:4600';
-        ApiUrl='localhost:4600';
+        ApiUrl='http://weather-radar-api-app:4600';
+        //ApiUrl='localhost:4600';
     } else if (req.params.apiName = 'merraApi') {
-        //ApiUrl='http://weather-radar-api-app:4600';
-        ApiUrl='localhost:4800';
+        ApiUrl='http://merra-api-app:4800';
+        //ApiUrl='localhost:4800';
     }
     
     formattedPath = ApiUrl + req.originalUrl;
