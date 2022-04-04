@@ -7,8 +7,8 @@ async function run(){
     {
         //kafka client connection
         const kafka = new Kafka({
-            "clientId": "weatherCacheClient",
-            "brokers" :["localhost:9092"]
+            "clientId": "NexRADClient",
+            "brokers" :["kafka-0.kafka-headless.space-dev.svc.cluster.local:9092"]
         })
 
         //producer interface
