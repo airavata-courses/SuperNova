@@ -1,12 +1,12 @@
-const {Kafka} = require("kafkajs")
+const {Kafka} = require("kafkajs");
 
-run();
-async function run(){
+runTopic();
+async function runTopic(){
     try
     {        
         //kafka client connection
         const kafka = new Kafka({
-            "clientId": "myapp",
+            "clientId": "weatherCacheClient",
             "brokers" :["localhost:9092"]
         })
 
@@ -19,8 +19,7 @@ async function run(){
         //topic creation and partitioning radar names A-M, N-Z 
         await admin.createTopics({
             "topics": [{
-                "topic" : "Users",
-                "numPartitions": 2
+                "topic" : "merra_outgoing"
             }]
         })
         console.log("Created Successfully!")
@@ -34,5 +33,6 @@ async function run(){
         process.exit(0);
     }
 
-
 }
+
+//export {runTopic};

@@ -15,7 +15,8 @@
     "express": "^4.17.2",
     "lodash.isempty": "^4.4.0",
     "node-fetch": "^3.2.0",
-    "redis": "^3.0.2"
+    "redis": "^3.0.2",
+    "kafkajs": "^1.16.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
