@@ -111,6 +111,11 @@ app.get('/weatherApi/plot', cache, getPlot);
 // Merra-2 API for weather data plot  
 app.get('/merraApi/plot', cache, getPlot);
 
+// Weather Cache Build Info
+app.get('/weatherCache/buildinfo', function(req, res){
+    return res.send('weather-cache-00');
+});
+
 // Query Status API to show on dashboard
 app.post('/weatherApi/querystatus', function(req, res){
     console.log("query status endpoint CONNECT");
