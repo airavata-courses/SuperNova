@@ -6,28 +6,28 @@ const REDIS_PORT = process.env.REDIS_PORT || 6379;
 //const client = redis.createClient({ host:"weather-cache-redis", port:6379 });
 const client = redis.createClient(REDIS_PORT);
 client.on("error", function (err) {
-    console.log("ERR:REDIS: " + err);
+    console.log("ERR:REDIS Merra Consumer: " + err);
 });
 
-kafkaCacheConsumerNexRAD();
-async function kafkaCacheConsumerNexRAD(){
+kafkaCacheConsumerMerra();
+async function kafkaCacheConsumerMerra(){
     try
     {
         //kafka client connection
         const kafka = new Kafka({
             "clientId": "weatherCacheClient",
-            "brokers" :["kafka-0.kafka-headless.space-dev.svc.cluster.local:9092"]
+            "brokers" :["localhost:9092"]
         })
 
         //creating the consumer
-        const consumer = kafka.consumer({groupId: 'nexrad_incoming_group'})
-        console.log("Connecting.....")
+        const consumer = kafka.consumer({groupId: 'merra_incoming_group'})
+        console.log("Merra Consumer Connecting.....")
         await consumer.connect()
-        console.log("Connected!")
+        console.log("Merra Consumer Connected!")
 
         //Subscribing to topics
         await consumer.subscribe({
-            "topic": "nexrad_incoming",
+            "topic": "merra_incoming",
             "fromBeginning": true
         })
         
@@ -36,7 +36,7 @@ async function kafkaCacheConsumerNexRAD(){
             "eachMessage": async result => {
                 try {
                     //console.log(`RVD Msg ${result.message.value} on partition ${result.partition}`)
-                    console.log(`RVD Msg ${result.message.value}`)
+                    console.log(`Merra Consumer RVD Msg ${result.message.value}`)
                     //console.log('API SUCCESS RESPONSE:'+ formattedPath +':'+response.data);
                     // data_type + radar_id + date + status + plot_data
                     let getPlotResponse = result.message.value.toString().split(',');
@@ -55,7 +55,7 @@ async function kafkaCacheConsumerNexRAD(){
                 } catch (e) {
                     //console.log('API ERROR RESPONSE:'+ formattedPath +':'+ error.error);
                     //client.set(NexRADResponse.data_type+NexRADResponse.radar_id+NexRADResponse.date+'status', 'PROCESS_FAIL'); // weather plot status
-                    console.log('kafka consumer unable to handle incoming message', e)
+                    console.log('kafka merra consumer unable to handle incoming message', e)
                 }
             },
         })
@@ -63,7 +63,7 @@ async function kafkaCacheConsumerNexRAD(){
     }
     catch(ex)
     {
-        console.error(`kafka consumer exception ${ex}`)
+        console.error(`kafka merra consumer exception ${ex}`)
     }
     finally{
 
@@ -71,4 +71,4 @@ async function kafkaCacheConsumerNexRAD(){
 
 }
 
-module.exports = { kafkaCacheConsumerNexRAD }
+//module.exports = { kafkaCacheConsumerNexRAD }

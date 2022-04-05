@@ -6,7 +6,7 @@ async function kafkaCacheProducer(dataType, msg){
         //kafka client connection
         const kafka = new Kafka({
             "clientId": "weatherCacheClient",
-            "brokers" :["kafka-0.kafka-headless.space-dev.svc.cluster.local:9092"]
+            "brokers" :["localhost:9092"]
         })
 
         //producer interface
@@ -17,12 +17,13 @@ async function kafkaCacheProducer(dataType, msg){
 
         //producer send object with topic and messages having partitions of radar names A-M 0, N-Z 1
         console.log(`Weather Cache Producer dataType: ${dataType}`);
-        if (dataType = 'NexRAD') {
+        if (dataType === 'NexRAD') {
             topic = 'nexrad_incoming'
-        } else if (dataType = 'Merra-2') {
+        } else if (dataType === 'Merra-2') {
             topic = 'merra_incoming'
         }
-
+        
+        console.log(`topic: ${topic}`)
         //producer send object with topic and messages
         const result =  await producer.send({
             "topic": topic,
