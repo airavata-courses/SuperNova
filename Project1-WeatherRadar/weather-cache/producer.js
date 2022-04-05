@@ -6,7 +6,7 @@ async function kafkaCacheProducer(dataType, msg){
         //kafka client connection
         const kafka = new Kafka({
             "clientId": "weatherCacheClient",
-            "brokers" :["localhost:9092"]
+            "brokers" :["kafka-0.kafka-headless.space-dev.svc.cluster.local:9092"]
         })
 
         //producer interface
