@@ -12,5 +12,11 @@
       "port": 4400,
       "url": "http://weather-cache-app:4400"
     }
+    "merraApi": {
+      "apiName": "merraApi",
+      "host":"http://weather-cache-app",
+      "port": 4400,
+      "url": "http://weather-cache-app:4400"
+    }    
   }
 }
