@@ -47,9 +47,14 @@ def kafka_producer(plot_file, data_type, radar_id, date):
     try:
         producer = KafkaProducer(bootstrap_servers=['kafka-0.kafka-headless.space-dev.svc.cluster.local:9092'])
         result = True if plot_file else False
-        msg = bytes(data_type + "," + radar_id + "," + date + ",", 'ascii')
-        if (result):
+        if result:
+            msg = bytes(data_type + "," + radar_id + "," + date + ", PROCESS_DONE,", 'ascii')
             producer.send('nexrad_outgoing', msg + plot_file).add_callback(on_send_success).add_errback(
+                on_send_error)
+        else:
+            msg = bytes(data_type + "," + radar_id + "," + date + ", PROCESS_FAIL, ", 'ascii')
+            producer.send('nexrad_outgoing', msg).add_callback(
+                on_send_success).add_errback(
                 on_send_error)
     except Exception as e:
         print("NexRAD Producer Exception:", e)
