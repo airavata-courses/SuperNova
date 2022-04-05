@@ -16,6 +16,7 @@ async function kafkaCacheProducer(dataType, msg){
         console.log("Weather Cache Producer Connected!")
 
         //producer send object with topic and messages having partitions of radar names A-M 0, N-Z 1
+        console.log(`Weather Cache Producer dataType: ${dataType}`);
         if (dataType = 'NexRAD') {
             topic = 'nexrad_incoming'
         } else if (dataType = 'Merra-2') {
