@@ -1,14 +1,12 @@
 from starlette.requests import Request
 from starlette.responses import Response
-
 from fastapi import FastAPI, HTTPException
 import uvicorn
-from fastapi.responses import FileResponse
 from fastapi.middleware import Middleware
 from fastapi.middleware.cors import CORSMiddleware
 import plotting
 import kafka_msg_handler
-import multiprocessing
+import threading
 
 app = FastAPI()
 
@@ -57,10 +55,13 @@ def setup():
 
 
 if __name__ == '__main__':
-    p1 = multiprocessing.Process(target=setup, args=())
-    p2 = multiprocessing.Process(target=kafka_msg_handler.nexrad_msg_consumer, args=())
-    p1.start()
-    p2.start()
+    try:
+        api = threading.Thread(target=setup, args=())
+        consumer = threading.Thread(target=kafka_msg_handler.nexrad_msg_consumer, args=())
+        api.start()
+        consumer.start()
+    except Exception as e:
+        print("Error: unable to start thread",e)
 
 ## Run via docker
 
