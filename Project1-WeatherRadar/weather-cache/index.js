@@ -29,7 +29,7 @@ app.use(express.json());
 function getPlot(req, res, next) {
     console.log('kafka getPlot backend call..');
     client.set(dataType+radar_id+date+'status', 'PROCESS_IN'); // weather plot status
-
+    console.log(`redis PROCESS_IN status key parameters: ${dataType+radar_id+date}`);
     kafkaProducerSuccess = runProducer.kafkaCacheProducer(dataType, JSON.stringify({"dataType":dataType,"radar_id":radar_id,"date":date}));
     if (kafkaProducerSuccess = true) {
         return res.sendStatus(200);
