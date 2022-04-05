@@ -14,7 +14,13 @@ export class WeatherService {
 
   getWeatherPlot(userQuery: any): Observable<any>  {
     console.log('Query Params:' + userQuery)
-    return this.http.get(this.publicApi.gatewayURL+this.publicApi.weatherPlot+'?radar_id='+userQuery.radStation+'&date='+userQuery.date,{responseType: 'text'});
+    let endpoint:string;
+    if (userQuery.dataType=='NexRAD') {
+      endpoint = this.publicApi.weatherPlot;
+    } else {
+      endpoint = this.publicApi.merraPlot;
+    }
+    return this.http.get(this.publicApi.gatewayURL+endpoint+'?dataType='+userQuery.dataType+'&radar_id='+userQuery.radStation+'&date='+userQuery.date,{responseType: 'text'});
   }
 
   getQueryStatus(data:UserSessionInfo[]) {
