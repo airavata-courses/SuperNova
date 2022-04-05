@@ -29,7 +29,8 @@ app.use(express.json());
 function getPlot(req, res, next) {
     console.log('kafka getPlot backend call..');
     client.set(dataType+radar_id+date+'status', 'PROCESS_IN'); // weather plot status
-    kafkaProducerSuccess = runProducer.kafkaCacheProducer(dataType, JSON.stringify({"data_type":dataType,"radar_id":radar_id,"date":date}));
+
+    kafkaProducerSuccess = runProducer.kafkaCacheProducer(dataType, JSON.stringify({"dataType":dataType,"radar_id":radar_id,"date":date}));
     if (kafkaProducerSuccess = true) {
         return res.sendStatus(200);
     } else {
@@ -86,7 +87,7 @@ function cache(req, res, next) {
     current_url = new URL(formattedPath);
     search_params = current_url.searchParams;
     console.log('parameters: ' + search_params)
-    dataType = search_params.get('data_type'); 
+    dataType = search_params.get('dataType'); 
     radar_id = search_params.get('radar_id');
     date = search_params.get('date');
     /* route to redis cache */
