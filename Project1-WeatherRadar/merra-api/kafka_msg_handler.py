@@ -47,11 +47,11 @@ def kafka_producer(plot_file, data_type, radar_id, date):
         producer = KafkaProducer(bootstrap_servers=['kafka-0.kafka-headless.space-dev.svc.cluster.local:9092'])
         result = True if plot_file else False
         if result:
-            msg = bytes(data_type + "," + radar_id + "," + date + ", PROCESS_DONE,", 'ascii')
+            msg = bytes(data_type + "," + radar_id + "," + date + ",PROCESS_DONE,", 'ascii')
             producer.send('merra_outgoing', msg + plot_file).add_callback(on_send_success).add_errback(
                 on_send_error)
         else:
-            msg = bytes(data_type + "," + radar_id + "," + date + ", PROCESS_FAIL, ", 'ascii')
+            msg = bytes(data_type + "," + radar_id + "," + date + ",PROCESS_FAIL, ", 'ascii')
             producer.send('merra_outgoing', msg).add_callback(
                 on_send_success).add_errback(
                 on_send_error)
