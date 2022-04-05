@@ -38,11 +38,16 @@ public class SessionRequestInfo implements Serializable {
     public void setDate(String date) {
         this.date = date;
     }
-    private String radStation;
+    public String getDataType() {
+		return dataType;
+	}
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
+	}
+	private String radStation;
+    
+    private String dataType;
    
-
     private String date;
-
-
 
 }

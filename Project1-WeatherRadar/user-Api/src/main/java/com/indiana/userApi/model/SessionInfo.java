@@ -29,18 +29,30 @@ public class SessionInfo implements Serializable{
 
     @Column
     private String radStation;
+    
+    @Column
+    private String dataType;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    public String getDataType() {
+		return dataType;
+	}
+
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
     private Date sessionTime;
 
     private String date;
 
-    public SessionInfo(Integer id, Integer userID, String radStation, Date sessionTime, String date) {
+    public SessionInfo(Integer id, Integer userID, String radStation, String dataType, Date sessionTime, String date) {
         this.id = id;
         this.userID = userID;
         this.radStation = radStation;
         this.sessionTime = sessionTime;
         this.date = date;
+        this.dataType = dataType;
     }
 
     public SessionInfo() {

@@ -65,6 +65,7 @@ public class WeatherController {
 			SessionInfo sessionInfo = new SessionInfo();
 			sessionInfo.setSessionTime(new Timestamp(System.currentTimeMillis()));
 			sessionInfo.setDate(sessionRequestInfo.getDate());
+			sessionInfo.setDataType(sessionRequestInfo.getDataType());
 			sessionInfo.setRadStation(sessionRequestInfo.getRadStation());
 			sessionInfo.setUserID(newUserInfo.getId());
 			sessionInfo = sessionInfoRepository.save(sessionInfo);
@@ -82,6 +83,7 @@ public class WeatherController {
 		SessionInfo sessionInfo = new SessionInfo();
 		sessionInfo.setSessionTime(new Timestamp(System.currentTimeMillis()));
 		sessionInfo.setDate(sessionRequestInfo.getDate());
+		sessionInfo.setDataType(sessionRequestInfo.getDataType());
 		sessionInfo.setRadStation(sessionRequestInfo.getRadStation());
 		sessionInfo.setUserID(userDetail.getId());
 		sessionInfo = sessionInfoRepository.save(sessionInfo);
