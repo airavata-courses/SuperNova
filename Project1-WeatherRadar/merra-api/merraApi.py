@@ -7,8 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import kafka_msg_handler
 import plotting
-import multiprocessing
-
+import threading
 app = FastAPI()
 
 origins = ["*"]
@@ -56,10 +55,13 @@ def setup():
 
 
 if __name__ == '__main__':
-    p1 = multiprocessing.Process(target=setup, args=())
-    p2 = multiprocessing.Process(target=kafka_msg_handler.nexrad_msg_consumer, args=())
-    p1.start()
-    p2.start()
+    try:
+        api = threading.Thread(target=setup, args=())
+        consumer = threading.Thread(target=kafka_msg_handler.nexrad_msg_consumer, args=())
+        api.start()
+        consumer.start()
+    except Exception as e:
+        print("Error: unable to start thread",e)
 
 ## Run via docker
 
