@@ -56,10 +56,11 @@ def setup():
 
 if __name__ == '__main__':
     try:
-        api = threading.Thread(target=setup, args=())
-        consumer = threading.Thread(target=kafka_msg_handler.nexrad_msg_consumer, args=())
-        api.start()
-        consumer.start()
+        setup()
+        # api = threading.Thread(target=setup, args=())
+        # consumer = threading.Thread(target=kafka_msg_handler.merra_msg_consumer, args=())
+        # api.start()
+        # consumer.start()
     except Exception as e:
         print("Error: unable to start thread",e)
 

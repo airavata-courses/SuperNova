@@ -3,7 +3,7 @@ from kafka import KafkaConsumer, KafkaProducer
 import plotting
 
 
-def nexrad_msg_consumer():
+def merra_msg_consumer():
     try:
         print('Merra Kafka Consumer has started')
         consumer = KafkaConsumer(
@@ -73,3 +73,10 @@ def on_send_error(record_metadata, data_type, radar_id, date, excp):
           .format(record_metadata.topic, record_metadata.partition,
                   record_metadata.offset, record_metadata.key,
                   data_type, radar_id, date, excp))
+
+
+if __name__ == '__main__':
+    try:
+        merra_msg_consumer()
+    except Exception as e:
+        print("Error: unable to start thread", e)
