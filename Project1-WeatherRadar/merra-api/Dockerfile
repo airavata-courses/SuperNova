@@ -16,4 +16,4 @@ RUN pip3 install arm-pyart
 ENV run_env=$run_env
 
 
-CMD python merraApi.py  --pythonpath .
+CMD python kafka_msg_handler.py  --pythonpath .
