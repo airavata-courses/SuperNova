@@ -36,11 +36,11 @@ async function kafkaCacheConsumerNexRAD(){
             "eachMessage": async result => {
                 try {
                     //console.log(`RVD Msg ${result.message.value} on partition ${result.partition}`)
-                    console.log(`NexRAD Message Consumed RVD Msg ${result.message.value}`)
+                    //console.log(`NexRAD Message Consumed RVD Msg ${result.message.value}`)
                     //console.log('API SUCCESS RESPONSE:'+ formattedPath +':'+response.data);
                     // data_type + radar_id + date + status + plot_data
                     let getPlotResponse = result.message.value.toString().split(',');
-                    console.log(getPlotResponse);
+                    console.log('NexRAD Message Consumed RVD Msg', getPlotResponse[0]+getPlotResponse[1]+getPlotResponse[2]);
 
                     // Set data to Redis
                     if (getPlotResponse[0] = 'NexRAD') {

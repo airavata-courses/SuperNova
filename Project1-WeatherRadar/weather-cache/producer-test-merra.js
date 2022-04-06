@@ -8,14 +8,14 @@ async function run(){
         //kafka client connection
         const kafka = new Kafka({
             "clientId": "MerraClient",
-            "brokers" :["kafka-0.kafka-headless.space-dev.svc.cluster.local:9092"]
+            "brokers" :["localhost:9092"]
         })
 
         //producer interface
         const producer = kafka.producer();
-        console.log("Connecting.....")
+        console.log("Merra Producer Connecting.....")
         await producer.connect()
-        console.log("Connected!")
+        console.log("Merra Producer Connected!")
 
         //producer send object with topic and messages having partitions of radar names A-M 0, N-Z 1
         //const partition = msg[0] < "N" ? 0 : 1;
@@ -28,12 +28,12 @@ async function run(){
                 }
             ]
         })
-        console.log(`Send Successfully! ${JSON.stringify(result)}`)
+        console.log(`Merra Producer Send Successfully! ${JSON.stringify(result)}`)
         await producer.disconnect();
     }
     catch(ex)
     {
-        console.error(`Something bad happened ${ex}`)
+        console.error(`Merra Producer Something bad happened ${ex}`)
     }
     finally{
         process.exit(0);
