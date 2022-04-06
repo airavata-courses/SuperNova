@@ -204,9 +204,10 @@ export class DashboardComponent implements OnInit{
   currentRadStationDate: string = 'NA';
 
   OnRowClick(row: any) {
+    console.log(row.dataType);
     console.log(row.radStation);
     if (row.plotStatus == PlotStatus.PROCESS_DONE) {
-      this.plotQueryData({ radStation:row.radStation, date:row.date });
+      this.plotQueryData({ dataType: row.dataType,radStation:row.radStation, date:row.date });
       this.currentRadStation = RadStationList.getStationName[row.radStation];
       this.currentRadStationDate = row.date;
     }
