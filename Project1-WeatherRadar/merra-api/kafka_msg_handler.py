@@ -17,7 +17,7 @@ def nexrad_msg_consumer():
         for message in consumer:
             radar_id = message.value["radar_id"]
             date = message.value["date"]
-            data_type = message.value["data_type"]
+            data_type = message.value["dataType"]
 
             if data_type == 'Merra-2':
                 print("Merra Consumer Message Consumed: message_topic:{0}, message_partition:{1}, message_offset:{2} "
