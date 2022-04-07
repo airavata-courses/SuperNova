@@ -44,3 +44,4 @@ Spring 2022 Project
 
 # Architecture Diagram
 ![](https://github.com/airavata-courses/SuperNova/blob/dev-wiki-data/wiki/wiki_images/Architecture.png)
+![](https://github.com/airavata-courses/SuperNova/blob/dev-wiki-data/wiki/wiki_images/Project3-ArchitectureDiagram.png)
