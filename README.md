@@ -6,6 +6,11 @@ Spring 2022 Project
 2. Sumedh Salvi
 3. Richa Jha
 
+# Project 3:
+* Demo App: http://weatherapp.twilightparadox.com:30000
+* CI/CD Jenkin: http://149.165.154.149:8080/job/ADS/
+* jetstream instance: supernova_weather_app_instance
+
 # Project Setup Guide
 * [Project Setup Instructions](https://github.com/airavata-courses/SuperNova/wiki/Weather-Radar-Project-Setup)
 
