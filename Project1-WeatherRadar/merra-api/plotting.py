@@ -30,6 +30,7 @@ def plot_merra(radar_id, month, day, year):
         # return plot_path
         if not exists(plot_path):
             fetch_file = fetchdata(month, day, year)
+            if fetch_file == None: return None
             # 'MERRA2_400.tavg1_2d_slv_Nx.20220201.nc4'
             print("FILE_NAME: " + fetch_file)
             xds = xarray.open_dataset(fetch_file)
@@ -101,6 +102,9 @@ def fetchdata(month, day, year):
             with requests.get(
                     "https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2/M2T1NXSLV.5.12.4/2022/01/MERRA2_400.tavg1_2d_slv_Nx.20220101.nc4",
                     stream=True) as result:
+                if result.status_code != 200: 
+                    print("Downloading merra data failed",result.status_code)
+                    return None
                 total_length = int(result.headers.get("Content-Length"))
 
                 with tqdm.wrapattr(result.raw, "read", total=total_length, desc="") as raw:
