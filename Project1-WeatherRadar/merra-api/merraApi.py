@@ -37,9 +37,9 @@ app.middleware('http')(catch_exceptions_middleware)
 async def read_root(radar_id, date):
     print('radar_id:{0}, date:{1}'.format(radar_id, date))
     report_date = date.split('-')
-    plot_file = plotting.plot_reflectivity(radar_id, int(report_date[0]), int(report_date[1]), int(report_date[2]))
+    plot_file = plotting.plot_merra(radar_id, report_date[0], report_date[1], report_date[2])
     if plot_file:
-        return plot_file
+     return plot_file
     else:
         raise HTTPException(status_code=404, detail="Item not found")
 
@@ -56,11 +56,10 @@ def setup():
 
 if __name__ == '__main__':
     try:
-        setup()
-        # api = threading.Thread(target=setup, args=())
-        # consumer = threading.Thread(target=kafka_msg_handler.merra_msg_consumer, args=())
-        # api.start()
-        # consumer.start()
+        api = threading.Thread(target=setup, args=())
+        consumer = threading.Thread(target=kafka_msg_handler.merra_msg_consumer, args=())
+        api.start()
+        consumer.start()
     except Exception as e:
         print("Error: unable to start thread",e)
 
@@ -68,5 +67,5 @@ if __name__ == '__main__':
 
 # ```
 # docker build --build-arg run_env=dev . -t weatherradar:test
-# docker run -e PORT=8000 -p 8000:8000 weatherradar:test
+# docker run -e PORT=4800 -p 4800:4800 weatherradar:test
 # ```
