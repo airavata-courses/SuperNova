@@ -53,7 +53,7 @@ def plot_merra(radar_id, month, day, year):
             frames = []
             for i in range(timelen):
                 data = pr.sel(time=pr['time'][i]).data #pd.read_csv(foldercsv + str(i) + ".npz", sep=',', header=None).values
-                figure = plt.figure(figsize=(17, 12))
+                figure = plt.figure(figsize=(4, 4))
                 Map_Plot = Basemap(projection='cyl', lon_0=0, resolution='c')
                 Map_Plot.drawcountries()
 
@@ -61,7 +61,7 @@ def plot_merra(radar_id, month, day, year):
                 Map_Plot.fillcontinents(color='green', lake_color='aqua')
                 COLOR_BAR_FUNC = Map_Plot.colorbar(TEMP_FUNC, "bottom", size="5%", pad="2%")
                 COLOR_BAR_FUNC.set_label('Dobsons')
-                plt.title("TOTAL COLUMN OZONE", fontsize=18)
+                plt.title("TOTAL COLUMN OZONE", fontsize=10)
                 bytes_image = io.BytesIO()
                 plt.savefig(bytes_image, format='png')
                 bytes_image.seek(0)
