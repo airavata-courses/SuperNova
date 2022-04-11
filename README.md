@@ -10,6 +10,7 @@ Spring 2022 Project
 * Demo App: http://weatherapp.twilightparadox.com:30000
 * CI/CD Jenkin: http://149.165.154.149:8080/job/ADS/
 * jetstream instance: supernova_weather_app_instance
+* Architectural Improvement: https://github.com/airavata-courses/SuperNova/wiki/Architectural-Optimization-PART-1
 
 # Project Setup Guide
 * [Project Setup Instructions](https://github.com/airavata-courses/SuperNova/wiki/Weather-Radar-Project-Setup)
@@ -48,5 +49,4 @@ Spring 2022 Project
 
 
 # Architecture Diagram
-![](https://github.com/airavata-courses/SuperNova/blob/dev-wiki-data/wiki/wiki_images/Architecture.png)
 ![](https://github.com/airavata-courses/SuperNova/blob/dev-wiki-data/wiki/wiki_images/Project3-ArchitectureDiagram.png)
