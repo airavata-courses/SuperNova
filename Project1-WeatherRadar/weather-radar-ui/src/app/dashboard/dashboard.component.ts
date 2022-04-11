@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit{
     private weatherService: WeatherService,
     private _snackBar: MatSnackBar,
     private sanitizer: DomSanitizer,
-    public spinnerService: SpinnerService,
+    public spinnerService: SpinnerService
     ) {
   }
 
@@ -67,6 +67,9 @@ export class DashboardComponent implements OnInit{
     this.login();
     this.createForm();
     this.getRadStation();
+    setInterval(()=> {
+      this.populateUserSession();
+    }, 5000);
     this.populateUserSession();
     this.maxDate.setDate(this.maxDate.getDate() - 1);
   }
@@ -192,7 +195,7 @@ export class DashboardComponent implements OnInit{
   sendQuery(userQuery: any): void {
     this._snackBar.open('Query Added in Queue',undefined, { duration:1000 });
     this.weatherService.getWeatherPlot(userQuery).subscribe( blob=> {
-      //this.populateUserSession();
+    this.populateUserSession();
     },
     err => {
       console.log('sendQuery Error:', err);
