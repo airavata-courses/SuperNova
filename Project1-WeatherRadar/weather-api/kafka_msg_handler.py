@@ -60,19 +60,13 @@ def kafka_producer(plot_file, data_type, radar_id, date):
         print("NexRAD Producer Exception:", e)
 
 
-def on_send_success(record_metadata, data_type, radar_id, date):
-    print("NexRAD Producer Message Produced Success: message_topic:{0}, message_partition:{1}, message_offset:{2} "
-          "message_key:{3}, data_type:{4} , radar_id:{5}, date:{6}"
-          .format(record_metadata.topic, record_metadata.partition,
-                  record_metadata.offset, record_metadata.key,
-                  data_type, radar_id, date))
+def on_send_success(record_metadata):
+    print("NexRAD Producer Message Produced Success")
+    print(record_metadata)
 
 
-def on_send_error(record_metadata, data_type, radar_id, date, excp):
-    print("NexRAD Producer Message Produced Error: message_topic:{0}, message_partition:{1}, message_offset:{2} "
-          "message_key:{3}, data_type:{4} , radar_id:{5}, date:{6}, exception: {7}"
-          .format(record_metadata.topic, record_metadata.partition,
-                  record_metadata.offset, record_metadata.key,
-                  data_type, radar_id, date, excp))
+def on_send_error(excp):
+    print("NexRAD Producer Message Produced Error")
+    print(excp)
 
 
