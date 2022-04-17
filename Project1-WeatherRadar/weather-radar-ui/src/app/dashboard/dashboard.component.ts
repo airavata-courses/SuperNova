@@ -163,7 +163,9 @@ export class DashboardComponent implements OnInit{
   postUserAction(userQuery: UserQuery): void {
     const currentData = this.userSessionData.data;
     for(let current of currentData){
-      if(current.radStation == userQuery.radStation && userQuery.date == current.date) {
+      if(current.dataType == userQuery.dataType &&
+        current.radStation == userQuery.radStation &&
+        userQuery.date == current.date) {
         this._snackBar.open('Query Already Processed',undefined, { duration:1000 });
         return;
       }
