@@ -10,7 +10,7 @@ pipeline {
                 dir("${env.WORKSPACE}/Project1-WeatherRadar/weather-radar-ui"){
                     sh(script: """
                     sed -i 's/WeatherRadarUi-00/WeatherRadarUi-${BUILD_ID}/' src/index.html
-                    npm ci
+                    npm ci --force
                     npm install -g @angular/cli@13.1.4 
                     ng build
                     """)
