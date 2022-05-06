@@ -6,6 +6,8 @@ Spring 2022 Project
 2. Sumedh Salvi
 3. Richa Jha
 
+# Project 4: [Custos Case Study](https://github.com/airavata-courses/SuperNova/wiki/Project-4:-Custos-Case-Study)
+
 # Project 3:
 * Demo App: http://weatherapp.twilightparadox.com:30000
 * CI/CD Jenkin: http://149.165.154.149:8080/job/ADS/
