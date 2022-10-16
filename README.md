@@ -1,28 +1,37 @@
-# SuperNova
-Spring 2022 Project
+# Team: SuperNova
+Applied Distributed Systems: Spring 2022 Project
+
+Course Objectives:
+* Provide a high level, broad understanding of the application of core distributed computing systems concepts and apply them to build “Software as a     Service” systems.
+* Study both abstract concepts and practical techniques for building Cloud-Native Distributed Systems.
+* Provide hands-on experience in developing scalable application stacks while working with open source philosophies modeled after Apache Software       Foundation.
+* Apply the general concepts of Distributed Systems to understanding the state of the art in “real world” systems.
+
+# Course Project:
+1. Weather Data Process & Analysis: 
+   * Design distributed system which will process realtime data produces by weather data collecting system.
+   * Analysize the process data and generate visualization for weather reflectivity.
+   * Data is feeded from NexRAD Airport Weather Radar & NASA MERRA-2 Weather Sattelite Data.
+   * Project Phase:
+     * Design MVP microservice-based system to process & visualize data from NexRAD dataset.
+     * Containerized services using docker & setup deployment pipeline using jenkins.
+     * Orchestration using kubernetes to make system scalable, reliable & fault tolerant.
+     * System reliability & Stress testing using JMeter.
+     * Integration on new service to handle MERRA-2 NASA satellite Data.
+     * Recalibirate system again by reliability & Stress testing.
+   
+2. Custos Science Gateway Identity Management - Case Study
+   * Did a case study analysis of Apache Airavata built CUSTOS project.
+   * CUSTOS built using CILogon, LDAP and Active Directory. 
+   * Did system analysis of 7 core features like identity, access, profile,resource secret, group and sharing management.
+   * Project consists of 14 different microservices, we build and test deployment of each service on a cloud environment.
+   * Did a 15 different stress test on the CUSTOS system and documented the result to analyze the robustness of the system.
+
 
 # Developers
 1. Sanket Darwante
 2. Sumedh Salvi
 3. Richa Jha
-
-# Project 4: [Custos Case Study](https://github.com/airavata-courses/SuperNova/wiki/Project-4:-Custos-Case-Study)
-
-# Project 3:
-* Demo App: http://weatherapp.twilightparadox.com:30000
-* CI/CD Jenkin: http://149.165.154.149:8080/job/ADS/
-* jetstream instance: supernova_weather_app_instance
-* [Architectural Optimization](https://github.com/airavata-courses/SuperNova/wiki/Architectural-Optimization)
-* [MERRA-2 Service Architecture](https://github.com/airavata-courses/SuperNova/blob/dev-wiki-data/wiki/wiki_images/DataAssimilation-MERRA-API.png)
-
-# Project Setup Guide
-* [Project Setup Instructions](https://github.com/airavata-courses/SuperNova/wiki/Weather-Radar-Project-Setup)
-
-# Functional Specification
-* [A Complete Guide For User](https://github.com/airavata-courses/SuperNova/blob/dev-wiki-data/wiki/wiki_images/Functional%20Specification.pdf)
-
-# Scalability Report
-* [Weather Radar Scalability Testing](https://github.com/airavata-courses/SuperNova/wiki/Project-2:-Weather-Radar-Scalability-Testing)
 
 # Technology Stack
 * Front End: Angular
@@ -35,6 +44,25 @@ Spring 2022 Project
 * Containerization: Docker
 * Orchestration: Kubernetes
 * CI/CD: Jenkins
+
+
+# Project Setup Guide
+* [Project Setup Instructions](https://github.com/airavata-courses/SuperNova/wiki/Weather-Radar-Project-Setup)
+
+# Functional Specification
+* [A Complete Guide For User](https://github.com/airavata-courses/SuperNova/blob/dev-wiki-data/wiki/wiki_images/Functional%20Specification.pdf)
+
+# Phase 3:
+* Demo App: http://weatherapp.twilightparadox.com:30000
+* CI/CD Jenkin: http://149.165.154.149:8080/job/ADS/
+* jetstream instance: supernova_weather_app_instance
+* [Architectural Optimization](https://github.com/airavata-courses/SuperNova/wiki/Architectural-Optimization)
+* [MERRA-2 Service Architecture](https://github.com/airavata-courses/SuperNova/blob/dev-wiki-data/wiki/wiki_images/DataAssimilation-MERRA-API.png)
+
+# Phase 4: Scalability Report
+* [Weather Radar Scalability Testing](https://github.com/airavata-courses/SuperNova/wiki/Project-2:-Weather-Radar-Scalability-Testing)
+
+# Project 2: [Custos Case Study](https://github.com/airavata-courses/SuperNova/wiki/Project-4:-Custos-Case-Study)
 
 # Branch Distribution
 
@@ -59,7 +87,6 @@ Spring 2022 Project
 
 # Napkin Diagram
 ![](https://github.com/airavata-courses/SuperNova/blob/dev-wiki-data/wiki/wiki_images/napkinDaigram.jpg)
-
 
 # Architecture Diagram
 ![](https://github.com/airavata-courses/SuperNova/blob/dev-wiki-data/wiki/wiki_images/Project3-ArchitectureDiagram.png)
