@@ -45,22 +45,25 @@ Course Objectives:
 * Orchestration: Kubernetes
 * CI/CD: Jenkins
 
+# Project 1 Phases:
 
-# Project Setup Guide
+## Project Setup Guide
 * [Project Setup Instructions](https://github.com/airavata-courses/SuperNova/wiki/Weather-Radar-Project-Setup)
 
-# Functional Specification
+## Functional Specification
 * [A Complete Guide For User](https://github.com/airavata-courses/SuperNova/blob/dev-wiki-data/wiki/wiki_images/Functional%20Specification.pdf)
 
-# Phase 3:
+## Phase 2:
 * Demo App: http://weatherapp.twilightparadox.com:30000
 * CI/CD Jenkin: http://149.165.154.149:8080/job/ADS/
 * jetstream instance: supernova_weather_app_instance
+
+## Phase 3: Scalability Report
+* [Weather Radar Scalability Testing](https://github.com/airavata-courses/SuperNova/wiki/Project-2:-Weather-Radar-Scalability-Testing)
+
+## Phase 4: MERRA-2 Service Integration
 * [Architectural Optimization](https://github.com/airavata-courses/SuperNova/wiki/Architectural-Optimization)
 * [MERRA-2 Service Architecture](https://github.com/airavata-courses/SuperNova/blob/dev-wiki-data/wiki/wiki_images/DataAssimilation-MERRA-API.png)
-
-# Phase 4: Scalability Report
-* [Weather Radar Scalability Testing](https://github.com/airavata-courses/SuperNova/wiki/Project-2:-Weather-Radar-Scalability-Testing)
 
 # Project 2: [Custos Case Study](https://github.com/airavata-courses/SuperNova/wiki/Project-4:-Custos-Case-Study)
 
